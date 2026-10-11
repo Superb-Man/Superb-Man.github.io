@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>
+   Pointers, References, and the Objects Behind Them | Kazi Istiak Toriqe
+  </title>
+  <link href="./assets/css/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <header class="site-header">
+   <div class="container nav-inner">
+    <a class="wordmark" href="./index.html">
+     Kazi Istiak Toriqe
+    </a>
+    <nav>
+     <a href="./index.html">
+      About
+     </a>
+     <a href="./index.html#research">
+      Research
+     </a>
+     <a href="./index.html#projects">
+      Projects
+     </a>
+     <a href="./blog.html">
+      Blog
+     </a>
+     <a href="./index.html#contact">
+      Contact
+     </a>
+    </nav>
+   </div>
+  </header>
+  <main class="container article-layout">
+   <aside class="article-side">
+    <a class="minor-link" href="./blog.html">
+     ← All posts
+    </a>
+    <div class="side-label">
+     C++ / Learning notes
+    </div>
+    <p>
+     Pointers · References · Object lifetime
+    </p>
+    <details class="article-toc">
+     <summary>
+      Sections
+     </summary>
+     <ol>
+      <li>
+       <a href="#topic-1">
+        1. One date, three ways to talk about it
+       </a>
+      </li>
+      <li>
+       <a href="#topic-2">
+        2. Copying is not aliasing
+       </a>
+      </li>
+      <li>
+       <a href="#topic-3">
+        3. The most important reference surprise: assignment does not rebind
+       </a>
+      </li>
+      <li>
+       <a href="#topic-4">
+        4.
+        <code>
+         const Date&amp;
+        </code>
+        : same object, limited access
+       </a>
+      </li>
+      <li>
+       <a href="#topic-5">
+        5. Why getters often have trailing
+        <code>
+         const
+        </code>
+       </a>
+      </li>
+      <li>
+       <a href="#topic-6">
+        6. A pointer is different from a reference
+       </a>
+      </li>
+      <li>
+       <a href="#topic-7">
+        7. A side experiment: inheritance and virtual dispatch
+       </a>
+      </li>
+      <li>
+       <a href="#topic-8">
+        8. A caution from the original
+        <code>
+         Rect
+        </code>
+        /
+        <code>
+         Box
+        </code>
+        code: owning raw pointers
+       </a>
+      </li>
+      <li>
+       <a href="#topic-9">
+        9. A quick mental test
+       </a>
+      </li>
+      <li>
+       <a href="#topic-10">
+        The takeaway
+       </a>
+      </li>
+     </ol>
+    </details>
+    <!-- <a class="side-link" href="./content/blog/cpp_pointers_references.md">
+     Markdown source ↗
+    </a> -->
+   </aside>
+   <article class="article-paper">
+    <p class="eyebrow">
+     C++ / Learning notes
+    </p>
+    <h1>
+     Pointers, References, and the Objects Behind Them
+    </h1>
+    <p class="article-lead">
+     Pointers · References · Object lifetime
+    </p>
+    <div class="article-divider">
+    </div>
+    <div class="article-copy markdown-body math-article">
+     <p>
+      I used to find C++ references a little mysterious. Two different names could print the same date; some assignments changed both, while others changed only one. Once I began printing the addresses, the behavior became much easier to see.
+     </p>
+     <p>
+      The simplest way I now think about it is:
+      <strong>
+       a value is an object; a reference is another name for an object; a pointer is an object that stores an address
+      </strong>
+      . Most of the surprising behavior comes from confusing those three things.
+     </p>
+     <h2 id="topic-1">
+      1. One date, three ways to talk about it
+     </h2>
+     <pre><code class="language-cpp">Date date(2000, 12, 17);
+Date copy = date;        // another Date object
+Date&amp; alias = date;      // another name for date
+Date* pointer = &amp;date;   // pointer stores date's address
+</code></pre>
+     <div class="mermaid">flowchart LR
+    D["date: Date<br/>2000 / 12 / 17"]
+    C["copy: Date<br/>2000 / 12 / 17"]
+    A["alias: Date&"] -->|refers to| D
+    P["pointer: Date*<br/>stores &date"] -->|points to| D
+    D -. independent values .- C
+</div>
+     <p>
+      <code>
+       copy
+      </code>
+      starts with equal values but is a different object.
+      <code>
+       alias
+      </code>
+      refers to the original object.
+      <code>
+       pointer
+      </code>
+      lives somewhere too:
+      <code>
+       &amp;pointer
+      </code>
+      is the address
+      <em>
+       of the pointer variable
+      </em>
+      , while
+      <code>
+       pointer
+      </code>
+      contains the address
+      <em>
+       of the Date object
+      </em>
+      .
+     </p>
+     <pre><code class="language-cpp">std::cout &lt;&lt; &amp;date &lt;&lt; '\n';    // address of original object
+std::cout &lt;&lt; &amp;copy &lt;&lt; '\n';    // different address
+std::cout &lt;&lt; &amp;alias &lt;&lt; '\n';   // same address as date
+std::cout &lt;&lt; pointer &lt;&lt; '\n';  // same address as date
+std::cout &lt;&lt; &amp;pointer &lt;&lt; '\n'; // different: address of pointer variable
+</code></pre>
+     <p>
+      <strong>
+       An address printed for a reference is the referred object's address.
+      </strong>
+      A reference is not an independently reseatable variable, even if a compiler represents it internally using an address.
+     </p>
+     <h2 id="topic-2">
+      2. Copying is not aliasing
+     </h2>
+     <p>
+      Suppose a method returns a reference to the current object:
+     </p>
+     <pre><code class="language-cpp">class Date {
+    int year_, month_, day_;
+public:
+    Date(int y, int m, int d) : year_(y), month_(m), day_(d) {}
+    Date&amp; getDate() { return *this; }
+    const Date&amp; getDate() const { return *this; }
+    void setDate(int y, int m, int d) { year_=y; month_=m; day_=d; }
+    void print() const {
+        std::cout &lt;&lt; year_ &lt;&lt; '/' &lt;&lt; month_ &lt;&lt; '/' &lt;&lt; day_ &lt;&lt; '\n';
+    }
+};
+
+Date date(2000, 12, 17);
+Date copied = date.getDate();          // copy construction
+const Date&amp; observed = date.getDate(); // aliases original, read-only via observed
+Date&amp; writable = date.getDate();      // aliases original, writable
+</code></pre>
+     <p>
+      The return type
+      <code>
+       Date&amp;
+      </code>
+      does
+      <strong>
+       not
+      </strong>
+      force the recipient to be a reference. The declaration on the receiving side decides whether it creates a new
+      <code>
+       Date
+      </code>
+      (
+      <code>
+       Date copied
+      </code>
+      ) or binds an alias (
+      <code>
+       Date&amp; writable
+      </code>
+      ).
+     </p>
+     <div class="mermaid">flowchart TB
+    O["date<br/>2000/12/17"]
+    R["observed: const Date&"] --> O
+    W["writable: Date&"] --> O
+    C["copied<br/>2000/12/17<br/>separate object"]
+</div>
+     <p>
+      Now consider:
+     </p>
+     <pre><code class="language-cpp">Date replacement(2021, 5, 6);
+date = replacement;
+
+copied.print();    // 2000/12/17
+observed.print();  // 2021/5/6
+writable.print();  // 2021/5/6
+</code></pre>
+     <p>
+      The aliases reflect the original object's new value. The copy remains unchanged.
+     </p>
+     <h2 id="topic-3">
+      3. The most important reference surprise: assignment does not rebind
+     </h2>
+     <pre><code class="language-cpp">Date x(2000, 12, 17);
+Date y(2021, 5, 6);
+Date&amp; ref = x;
+
+ref = y; // assigns y's VALUE into x, it does not make ref refer to y
+</code></pre>
+     <div class="mermaid">flowchart LR
+    R["ref: Date&"] --> X["x: Date<br/>2021/5/6"]
+    Y["y: Date<br/>2021/5/6"]
+    Y -. "value copied by assignment" .-> X
+</div>
+     <p>
+      After this,
+      <code>
+       &amp;ref == &amp;x
+      </code>
+      is still true. A C++ reference stays bound to the same object for its entire lifetime.
+      <strong>
+       A reference assignment is an assignment
+       <em>
+        through
+       </em>
+       the reference.
+      </strong>
+     </p>
+     <p>
+      Compare with a pointer, which you
+      <em>
+       can
+      </em>
+      redirect:
+     </p>
+     <pre><code class="language-cpp">Date* ptr = &amp;x;
+ptr = &amp;y;     // ptr now points to y; x is unchanged
+*ptr = x;     // copies x's value into y; ptr still points to y
+</code></pre>
+     <p>
+      <code>
+       ptr = &amp;y
+      </code>
+      changes the pointer's stored address;
+      <code>
+       *ptr = x
+      </code>
+      changes the pointed-to
+      <code>
+       Date
+      </code>
+      .
+     </p>
+     <h2 id="topic-4">
+      4.
+      <code>
+       const Date&amp;
+      </code>
+      : same object, limited access
+     </h2>
+     <p>
+      Your first experiment used a member that returns
+      <code>
+       const Date&amp;
+      </code>
+      :
+     </p>
+     <pre><code class="language-cpp">const Date&amp; getDate() { return *this; }
+</code></pre>
+     <p>
+      This returns a read-only view of the
+      <em>
+       same object
+      </em>
+      through the returned reference, not a copied object. So:
+     </p>
+     <pre><code class="language-cpp">Date date(2000, 12, 17);
+const Date&amp; a = date.getDate(); // OK
+Date b = date.getDate();        // OK: copies the returned Date
+// Date&amp; c = date.getDate();    // error: cannot drop const
+</code></pre>
+     <p>
+      And you can't assign through the read-only reference:
+     </p>
+     <pre><code class="language-cpp">// a = Date(2021, 5, 6); // error: assignment requires modifying a const Date
+</code></pre>
+     <p>
+      But
+      <strong>
+       <code>
+        const
+       </code>
+       on the reference doesn't freeze an originally mutable object
+      </strong>
+      . If someone else updates
+      <code>
+       date
+      </code>
+      ,
+      <code>
+       a
+      </code>
+      sees the update:
+     </p>
+     <pre><code class="language-cpp">date.setDate(2021, 5, 6);
+a.print(); // 2021/5/6
+</code></pre>
+     <p>
+      That matters for understanding
+      <code>
+       const
+      </code>
+      : it constrains
+      <em>
+       what can be done via a particular access path
+      </em>
+      . It is not necessarily global immutability.
+     </p>
+     <p>
+      There is one related design improvement. Prefer
+      <code>
+       const Date&amp; getDate() const
+      </code>
+      if callers should be allowed to call it on const
+      <code>
+       Date
+      </code>
+      objects; the trailing
+      <code>
+       const
+      </code>
+      applies to
+      <code>
+       *this
+      </code>
+      inside the method.
+     </p>
+     <h2 id="topic-5">
+      5. Why getters often have trailing
+      <code>
+       const
+      </code>
+     </h2>
+     <pre><code class="language-cpp">int getYear() const { return year_; }
+void print() const {
+    std::cout &lt;&lt; getYear() &lt;&lt; '\n';
+}
+void printDate(const Date&amp; d) {
+    d.print(); // requires Date::print() to be callable on const Date
+}
+</code></pre>
+     <p>
+      A
+      <code>
+       const Date&amp;
+      </code>
+      can only call member functions that are
+      <code>
+       const
+      </code>
+      -qualified (or otherwise permitted for const objects). A
+      <code>
+       const
+      </code>
+      member can call other
+      <code>
+       const
+      </code>
+      members, but it need not call
+      <em>
+       only
+      </em>
+      members: it can call free functions too, and there are controlled exceptions such as
+      <code>
+       mutable
+      </code>
+      members. The important rule is that it cannot ordinarily mutate the object's non-
+      <code>
+       mutable
+      </code>
+      state.
+     </p>
+     <h2 id="topic-6">
+      6. A pointer is different from a reference
+     </h2>
+     <p>
+      Your
+      <code>
+       getDateAnother()
+      </code>
+      returned
+      <code>
+       &amp;(*this)
+      </code>
+      . For a valid
+      <code>
+       this
+      </code>
+      pointer, that's equivalent to just returning
+      <code>
+       this
+      </code>
+      :
+     </p>
+     <pre><code class="language-cpp">Date* getDateAnother() { return this; }
+</code></pre>
+     <p>
+      Then:
+     </p>
+     <pre><code class="language-cpp">Date original(2021, 5, 6);
+Date* p = original.getDateAnother();
+Date* q = p-&gt;getDateAnother();
+
+p-&gt;print();     // access through pointer
+(*q).print();   // equivalent spelling
+std::cout &lt;&lt; (p == q) &lt;&lt; '\n'; // true: both hold the same address
+</code></pre>
+     <div class="mermaid">flowchart LR
+    P["p: Date*"] --> O["original: Date"]
+    Q["q: Date*"] --> O
+</div>
+     <p>
+      Assigning
+      <code>
+       q = &amp;another
+      </code>
+      redirects
+      <em>
+       q
+      </em>
+      only; assigning
+      <code>
+       *q = another
+      </code>
+      copies a
+      <code>
+       Date
+      </code>
+      into the object
+      <em>
+       q currently points to
+      </em>
+      . Nothing about
+      <code>
+       *q = ...
+      </code>
+      automatically redirects
+      <code>
+       p
+      </code>
+      or
+      <code>
+       q
+      </code>
+      .
+     </p>
+     <p>
+      <strong>
+       Safety note:
+      </strong>
+      returning
+      <code>
+       this
+      </code>
+      or
+      <code>
+       *this
+      </code>
+      is only safe for callers while the original object remains alive. Pointers and references do not automatically extend the lifetime of an existing object.
+     </p>
+     <h2 id="topic-7">
+      7. A side experiment: inheritance and virtual dispatch
+     </h2>
+     <p>
+      Your
+      <code>
+       Rect
+      </code>
+      /
+      <code>
+       Box
+      </code>
+      experiment introduces another source of indirection: a
+      <code>
+       Rect*
+      </code>
+      can point at a
+      <code>
+       Box
+      </code>
+      , and a
+      <code>
+       virtual
+      </code>
+      call can dispatch to
+      <code>
+       Box
+      </code>
+      's override at runtime.
+     </p>
+     <pre><code class="language-cpp">struct Rect {
+    virtual ~Rect() = default;
+    virtual int area() const { return 2 * 3; }
+};
+
+struct Box : Rect {
+    int area() const override { return 42; }
+};
+
+Box box;
+Rect* p = &amp;box;
+std::cout &lt;&lt; p-&gt;area(); // 42: virtual dispatch to Box::area()
+</code></pre>
+     <div class="mermaid">flowchart LR
+    P["p: Rect*"] --> B["Box object<br/>contains Rect base subobject"]
+    P -. "virtual area()" .-> F["Box::area()"]
+</div>
+     <p>
+      The variable
+      <code>
+       p
+      </code>
+      has static type
+      <code>
+       Rect*
+      </code>
+      but the referred object's dynamic type is
+      <code>
+       Box
+      </code>
+      . Virtual dispatch selects the override for the dynamic type.
+     </p>
+     <p>
+      There's a related detail in your experiment with
+      <code>
+       ++B1
+      </code>
+      and
+      <code>
+       ++(*R)
+      </code>
+      : when
+      <code>
+       operator++
+      </code>
+      is virtual, calling it through a base-class reference can invoke the derived override. But
+      <code>
+       operator=
+      </code>
+      is
+      <strong>
+       not automatically polymorphic
+      </strong>
+      : assignment through
+      <code>
+       Rect&amp;
+      </code>
+      operates on the
+      <code>
+       Rect
+      </code>
+      subobject unless you explicitly implement a different design.
+     </p>
+     <h2 id="topic-8">
+      8. A caution from the original
+      <code>
+       Rect
+      </code>
+      /
+      <code>
+       Box
+      </code>
+      code: owning raw pointers
+     </h2>
+     <p>
+      Your example uses
+      <code>
+       new
+      </code>
+      to allocate separate integers and a
+      <code>
+       char[]
+      </code>
+      for labels. This is useful for experimenting with pointers, but it introduces extra responsibilities:
+     </p>
+     <ul>
+      <li>
+       A destructor must release every owned allocation exactly once.
+      </li>
+      <li>
+       A copy constructor must make an independent copy of owned resources (your
+       <code>
+        Rect
+       </code>
+       and
+       <code>
+        Box
+       </code>
+       copy constructors attempt this).
+      </li>
+      <li>
+       A copy-assignment operator must also correctly copy
+       <em>
+        all
+       </em>
+       owned resources and handle self-assignment;
+       <code>
+        Box::operator=
+       </code>
+       in the original experiment copies the base fields and height but not the box name.
+      </li>
+      <li>
+       The expressions used for
+       <code>
+        Box::area()
+       </code>
+       and
+       <code>
+        Box::volume()
+       </code>
+       in the experiment are not the standard surface area/volume formulas for a rectangular box; that is a separate arithmetic issue, not a C++ reference issue.
+      </li>
+      <li>
+       Passing a string literal to
+       <code>
+        char*
+       </code>
+       is invalid in modern standard C++; use
+       <code>
+        const char*
+       </code>
+       or better
+       <code>
+        std::string
+       </code>
+       .
+      </li>
+     </ul>
+     <p>
+      For production-style code, using value members instead of owning raw pointers is simpler:
+     </p>
+     <pre><code class="language-cpp">struct Rect {
+    int length = 0;
+    int width = 0;
+    virtual ~Rect() = default;
+    virtual int area() const { return length * width; }
+};
+
+struct Box : Rect {
+    int height = 0;
+    std::string name;
+    int volume() const { return length * width * height; }
+};
+</code></pre>
+     <p>
+      This helps separate the
+      <strong>
+       learning goal
+      </strong>
+      —references, pointers, copying, polymorphism—from manual resource management. If you intentionally manage owned resources, learn the Rule of Three/Five and consider
+      <code>
+       std::unique_ptr
+      </code>
+      .
+     </p>
+     <h2 id="topic-9">
+      9. A quick mental test
+     </h2>
+     <pre><code class="language-cpp">Date a(2000, 12, 17);
+Date b(2021, 5, 6);
+Date&amp; ref = a;
+Date* ptr = &amp;a;
+Date copy = a;
+
+ref = b;
+ptr = &amp;b;
+ptr-&gt;setDate(2030, 1, 1);
+</code></pre>
+     <p>
+      What do the three objects contain now?
+     </p>
+     <table>
+      <thead>
+       <tr>
+        <th>
+         Expression
+        </th>
+        <th>
+         Final value
+        </th>
+        <th>
+         Why
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td>
+         <code>
+          a
+         </code>
+        </td>
+        <td>
+         2021/5/6
+        </td>
+        <td>
+         <code>
+          ref = b
+         </code>
+         copied values into
+         <code>
+          a
+         </code>
+        </td>
+       </tr>
+       <tr>
+        <td>
+         <code>
+          b
+         </code>
+        </td>
+        <td>
+         2030/1/1
+        </td>
+        <td>
+         <code>
+          ptr
+         </code>
+         was redirected to
+         <code>
+          b
+         </code>
+         , then wrote into it
+        </td>
+       </tr>
+       <tr>
+        <td>
+         <code>
+          copy
+         </code>
+        </td>
+        <td>
+         2000/12/17
+        </td>
+        <td>
+         its own independent snapshot
+        </td>
+       </tr>
+       <tr>
+        <td>
+         <code>
+          ref
+         </code>
+        </td>
+        <td>
+         2021/5/6
+        </td>
+        <td>
+         it still aliases
+         <code>
+          a
+         </code>
+        </td>
+       </tr>
+       <tr>
+        <td>
+         <code>
+          *ptr
+         </code>
+        </td>
+        <td>
+         2030/1/1
+        </td>
+        <td>
+         it refers to
+         <code>
+          b
+         </code>
+         now
+        </td>
+       </tr>
+      </tbody>
+     </table>
+     <h2 id="topic-10">
+      The takeaway
+     </h2>
+     <p>
+      The rule I remember is short:
+     </p>
+     <blockquote>
+      <p>
+       <strong>
+        A copy owns its own value. A reference is another name. A pointer stores an address.
+       </strong>
+      </p>
+     </blockquote>
+     <p>
+      Once those are clear, most of the tricky-looking expressions in the
+      <code>
+       Date
+      </code>
+      experiment stop feeling tricky. They are simply different ways of selecting an object and deciding whether to copy its
+      <em>
+       value
+      </em>
+      , change its
+      <em>
+       value
+      </em>
+      , or choose a different object to point at.
+     </p>
+    </div>
+    <div class="article-end">
+     End of article ·
+     <a href="./blog.html">
+      More writing
+     </a>
+    </div>
+   </article>
+  </main>
+  <footer class="container footer">
+   <span>
+    © 2026 Kazi Istiak Toriqe
+   </span>
+   <a href="./blog.html">
+    ← All writing
+   </a>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>if(window.mermaid){mermaid.initialize({startOnLoad:true,theme:"neutral",securityLevel:"strict"});}</script>
+  <script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"}};</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+ </body>
+</html>

@@ -1,0 +1,302 @@
+{
+  "name": "Kazi Istiak Toriqe",
+  "role": "Software R&D, Samsung Research Bangladesh | Prospective PhD Applicant, Fall 2027",
+  "location": "Dhaka, Bangladesh",
+  "github": "https://github.com/Superb-Man",
+  "email": "",
+  "linkedin": "",
+  "headline": "Hello, I’m Kazi Istiak Toriqe.",
+  "intro": "Thank you for visiting my little corner of the internet. Looking back at my years at Bangladesh University of Engineering and Technology, some of my favorite moments were the ones spent figuring out why something did not work: an unexpected page fault, a scheduler behaving strangely, or a program that refused to produce the result I expected. Those experiences gradually turned curiosity into a lasting affection for building things and understanding them from the inside.",
+  "focus": [
+    "Operating Systems",
+    "Distributed Systems",
+    "Concurrent Runtime Systems"
+  ],
+  "questions": [
+    "How can lightweight execution models support more concurrent work with less scheduling overhead?",
+    "How can replication and recovery protocols provide strong guarantees without unnecessary coordination?",
+    "How can the data path of a networked system minimize copies, blocking and wasted resources?"
+  ],
+  "education": {
+    "school": "Bangladesh University of Engineering and Technology (BUET)",
+    "degree": "B.Sc. in Computer Science and Engineering",
+    "courses": [
+      "Operating Systems",
+      "Distributed Systems",
+      "Computer Networks",
+      "Computer Architecture",
+      "Compilers",
+      "Microprocessors",
+      "Computer Security"
+    ],
+    "location": "Dhaka, Bangladesh",
+    "graduation": "Graduated 2025 (confirm year before publishing)"
+  },
+  "research": [
+    {
+      "title": "Patient Similarity Detection via Contrastive Learning",
+      "kind": "Undergraduate thesis · Manuscript under review",
+      "description": "Undergraduate thesis on patient similarity from Stanford Wearable PPG and PTB Diagnostic ECG signals. Adapted ResNeXt and EfficientNet to 1D time series, investigated contrastive learning and similarity aggregation, and evaluated results against baselines. Manuscript submitted to a Q1 journal (under review).",
+      "links": [
+        {
+          "label": "Supervisor: Dr. Atif Hasan Rahman",
+          "url": "https://cse.buet.ac.bd/faculty/faculty_detail/atif"
+        },
+        {
+          "label": "Collaborator: Subangkar Karmakar",
+          "url": "https://subangkar.github.io/"
+        }
+      ],
+      "tags": [
+        "Representation Learning",
+        "Physiological Signals",
+        "Research Methodology"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "name": "Samsung Research Bangladesh",
+      "role": "Software R&D",
+      "period": "May 2025 – Present",
+      "projects": [
+        {
+          "title": "Samsung Health Monitor · Sleep Apnea",
+          "text": "Implemented asynchronous Wear OS–Android message protocols; contributed to sensor sessions, recovery after boot/permission changes, health-data backup/restore, power-aware sensor activity and improved connection handling in collaboration with Samsung teams in America and Korea.",
+          "tags": [
+            "Wear OS",
+            "Async Messaging",
+            "Recovery",
+            "Resource Efficiency"
+          ],
+          "bullets": [
+            "Designed asynchronous message protocols between Wear OS and Android for Samsung Health Monitor’s Sleep Apnea feature, collaborating with Samsung Research America.",
+            "Worked on sensor collection, session management, and recovery after device reboot or permission changes.",
+            "Contributed to health-data backup, restore, and synchronization interfaces with Samsung Health SDK, collaborating with Samsung Korea.",
+            "Reduced unnecessary sensor activity and polling; refactored connection handling with an approximately 2× connection-establishment improvement (as measured internally)."
+          ]
+        },
+        {
+          "title": "FlashShare · Fault-Tolerant LAN File Sharing",
+          "text": "Designed a high-throughput peer-to-peer file transfer system supporting fanout and relay topologies. Separated user-space coordination from the data path, investigated low-copy Linux mechanisms, and designed progress-aware relay recovery. Further data-path work is ongoing.",
+          "tags": [
+            "Linux I/O",
+            "Relay/Fanout",
+            "Fault Tolerance",
+            "Networking"
+          ],
+          "url": "https://github.com/Superb-Man?tab=repositories",
+          "bullets": [
+            "Designed a high-throughput peer-to-peer system for large LAN file transfers with fanout and relay topologies.",
+            "Separated user-space control protocols from the bulk data path; implemented direct transfers with Linux sendfile().",
+            "Exploring splice()/tee() for low-copy relay forwarding and designing progress-aware recovery after relay failures."
+          ]
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "disKeyV",
+      "subtitle": "Logless replication and recovery",
+      "date": "Oct 2025 – Present",
+      "url": "https://github.com/Superb-Man/disKeyV",
+      "description": "An ongoing experimental logless distributed key–value store built around segment-based replication and recovery. It uses TCP communication, heartbeat-based failure detection and leader transitions, with crash recovery and safe-read handling. Further work considers software-emulated RDMA-style transport and recovery correctness.",
+      "tags": [
+        "Distributed Storage",
+        "Replication",
+        "Recovery"
+      ],
+      "featured": true,
+      "advisor": {
+        "label": "Course project supervisor: Dr. Abdullah Adnan",
+        "url": "https://cse.buet.ac.bd/faculty/faculty_detail/adnan"
+      },
+      "category": "Experimental Projects"
+    },
+    {
+      "title": "User-Level Thread Library",
+      "subtitle": "Lightweight execution on Linux",
+      "date": "2025",
+      "url": "https://github.com/Superb-Man/utl-linux",
+      "description": "Built a Linux user-level threading library from scratch with cooperative and preemptive scheduling, context switching, thread lifecycle management, and sleep/wake-up mechanisms.",
+      "tags": [
+        "C",
+        "Linux",
+        "Scheduling"
+      ],
+      "featured": true,
+      "category": "Selected Systems Projects"
+    },
+    {
+      "title": "Kernel Threads on xv6",
+      "subtitle": "Kernel concurrency mechanisms",
+      "date": "2023",
+      "url": "https://github.com/Superb-Man/Kernel-Thread",
+      "description": "Extended the xv6 kernel with threads sharing a process address space. Worked with thread creation, kernel scheduling behavior, and synchronization involving locks and semaphores, including challenges caused by sharing process resources across concurrent execution.",
+      "tags": [
+        "xv6",
+        "Threads",
+        "Synchronization"
+      ],
+      "category": "Selected Systems Projects"
+    },
+    {
+      "title": "Paging and Swap in xv6",
+      "subtitle": "Virtual memory implementation",
+      "date": "2023",
+      "url": "https://github.com/Superb-Man/paging",
+      "description": "Implemented on-demand paging and swap-space support in xv6, including page-fault trap handling, bookkeeping for resident and swapped pages, an LRU-style eviction policy, and moving evicted pages to and from secondary storage.",
+      "tags": [
+        "xv6",
+        "Virtual Memory",
+        "Paging"
+      ],
+      "category": "Selected Systems Projects"
+    },
+    {
+      "title": "Compiler Construction",
+      "subtitle": "Subset of C compiler",
+      "date": "Undergraduate project",
+      "url": "https://github.com/Superb-Man/Compiler",
+      "description": "Implemented a subset of a C compiler with Flex/Bison bottom-up parsing, scoped symbol tables, semantic processing, parse-tree construction, and on-the-fly intermediate code generation.",
+      "tags": [
+        "C/C++",
+        "Bison",
+        "Compilers"
+      ],
+      "category": "Selected Systems Projects"
+    },
+    {
+      "title": "SP in C",
+      "subtitle": "Shared-preferences style persistence",
+      "date": "Experimental implementation",
+      "url": "",
+      "category": "Selected Systems Projects",
+      "description": "Built an Android-like shared-preferences facility in C/C++ with asynchronous batch updates and background flushing. Repository link and precise implementation details can be added when verified.",
+      "tags": [
+        "C / C++",
+        "Persistence",
+        "Asynchronous I/O"
+      ]
+    },
+    {
+      "title": "4-bit MIPS Hardware Project",
+      "subtitle": "BUET · Level 3, Term 1",
+      "date": "Undergraduate hardware project",
+      "url": "",
+      "category": "Selected Systems Projects",
+      "description": "Undergraduate hardware-design project involving a 4-bit MIPS-style processor. Detailed datapath components, simulation environment, and repository link are awaiting confirmation.",
+      "tags": [
+        "Digital Logic",
+        "Processor Design"
+      ]
+    },
+    {
+      "title": "RegX-Solver",
+      "subtitle": "Regex and automata CLI",
+      "date": "Tool",
+      "url": "https://github.com/Superb-Man/RegX-Solver",
+      "category": "Tools",
+      "description": "Command-line tool for converting simple regular expressions into finite automata, minimizing DFAs, and simulating CYK parsing.",
+      "tags": [
+        "Automata",
+        "Parsing",
+        "CLI"
+      ]
+    },
+    {
+      "title": "Toolbox",
+      "subtitle": "Encoding and parsing utilities",
+      "date": "Tool",
+      "url": "https://github.com/Superb-Man/toolbox",
+      "category": "Tools",
+      "description": "Collection of encoding and parsing utilities, including compiler-parsing simulation for learning and teaching.",
+      "tags": [
+        "Utilities",
+        "Parsing"
+      ]
+    },
+    {
+      "title": "PACMAN",
+      "subtitle": "Arcade maze game",
+      "date": "Game",
+      "url": "https://github.com/Superb-Man/PACMAN",
+      "category": "Games",
+      "description": "A classic Pac-Man remake featuring 10 mazes with multiple levels, with extra fireball and hiding mechanics.",
+      "tags": [
+        "C/C++",
+        "OpenGL",
+        "Game Development"
+      ]
+    },
+    {
+      "title": "Escape from Death",
+      "subtitle": "Game-jam platform / arcade game",
+      "date": "Game",
+      "url": "https://github.com/Superb-Man/Runners_GameJam",
+      "category": "Games",
+      "description": "An eight-level arcade game built with Python and Pygame for a game jam.",
+      "tags": [
+        "Python",
+        "Pygame",
+        "Game Jam"
+      ]
+    }
+  ],
+  "reading": [
+    "Raft",
+    "Mu",
+    "CURP",
+    "DISC",
+    "xRaft",
+    "LoLKV",
+    "Beehive",
+    "Hermit / AIFM",
+    "MLSys papers"
+  ],
+  "skills": [
+    {
+      "title": "Programming languages",
+      "items": [
+        "C",
+        "C++",
+        "Go",
+        "Python",
+        "Java",
+        "Kotlin",
+        "Bash"
+      ]
+    },
+    {
+      "title": "Systems and concepts",
+      "items": [
+        "Linux / xv6",
+        "Concurrency and synchronization",
+        "User-level and kernel threads",
+        "Virtual memory and paging",
+        "Sockets and asynchronous messaging",
+        "Distributed replication and recovery",
+        "Linux data-movement APIs"
+      ]
+    },
+    {
+      "title": "Tools and platforms",
+      "items": [
+        "Git",
+        "Docker",
+        "Android",
+        "Wear OS",
+        "Flex / Bison",
+        "Linux debugging and profiling"
+      ]
+    }
+  ],
+  "intro2": "After graduating from BUET, I joined Samsung Research Bangladesh, where I have continued to learn from the practical challenges of building dependable software with others. Outside work, I still enjoy experimenting with ideas, revisiting old projects, and writing about mathematics. I am preparing to apply for PhD programs for Fall 2027, with the goal of pursuing original research in computer systems. This website collects some of the work and interests that have brought me here.",
+  "photo": "assets/Toriqe.jpg",
+  "photo_note": "Temporary placeholder photo — replace with your portrait before publishing.",
+  "cv_url": "https://example.com/my-cv.pdf",
+  "quora": "https://www.quora.com/profile/Kazi-Istiak-Toriqe/posts",
+  "phd_status": "Prospective PhD applicant · Fall 2027",
+  "research_interest_summary": "Operating systems, distributed systems, and concurrent runtime systems, particularly lightweight execution, low-overhead communication, and fault-tolerant coordination."
+}

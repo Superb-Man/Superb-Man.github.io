@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>
+   When Can an Integer Be Written as Consecutive Integers? | Kazi Istiak Toriqe
+  </title>
+  <link href="./assets/css/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <header class="site-header">
+   <div class="container nav-inner">
+    <a class="wordmark" href="./index.html">
+     Kazi Istiak Toriqe
+    </a>
+    <nav>
+     <a href="./index.html">
+      About
+     </a>
+     <a href="./index.html#research">
+      Research
+     </a>
+     <a href="./index.html#projects">
+      Projects
+     </a>
+     <a href="./blog.html">
+      Blog
+     </a>
+     <a href="./index.html#contact">
+      Contact
+     </a>
+    </nav>
+   </div>
+  </header>
+  <main class="container article-layout">
+   <aside class="article-side">
+    <a class="minor-link" href="./blog.html">
+     ← All posts
+    </a>
+    <div class="side-label">
+     Mathematics / Number Theory
+    </div>
+    <p>
+     Factorization · Consecutive sums · Modulo arithmetic
+    </p>
+    <details class="article-toc">
+     <summary>
+      Sections
+     </summary>
+     <ol>
+      <li>
+       <a href="#topic-1">
+        Why consecutive integers?
+       </a>
+      </li>
+      <li>
+       <a href="#topic-2">
+        Turn the sum into an equation
+       </a>
+      </li>
+      <li>
+       <a href="#topic-3">
+        Why an odd factor matters
+       </a>
+      </li>
+      <li>
+       <a href="#topic-4">
+        Powers of two
+       </a>
+      </li>
+      <li>
+       <a href="#topic-5">
+        Finding the longest run
+       </a>
+      </li>
+      <li>
+       <a href="#topic-6">
+        A small distinction
+       </a>
+      </li>
+     </ol>
+    </details>
+   </aside>
+   <article class="article-paper">
+    <p class="eyebrow">
+     Mathematics / Number Theory
+    </p>
+    <h1>
+     When Can an Integer Be Written as Consecutive Integers?
+    </h1>
+    <p class="article-lead">
+     Factorization · Consecutive sums · Modulo arithmetic
+    </p>
+    <div class="article-divider">
+    </div>
+    <div class="article-copy markdown-body math-article">
+     <p>
+      Suppose we want to write a positive integer $n$ as a sum of
+      <strong>
+       $k$ distinct positive integers
+      </strong>
+      , and their remainders modulo $k$ must also be distinct. How large can $k$ be?
+     </p>
+     <p>
+      At first this looks like two constraints: one about the sum, another about remainders. The nice observation is that
+      <strong>
+       consecutive integers satisfy the remainder condition automatically
+      </strong>
+      . So let's look for representations of $n$ as a sum of consecutive positive integers.
+     </p>
+     <h2 id="topic-1">
+      1. Why consecutive integers?
+     </h2>
+     <p>
+      For instance,
+     </p>
+     <p>
+      $$3+4+5=12.$$
+     </p>
+     <p>
+      Their remainders modulo $3$ are $0,1,2$: every residue appears exactly once. More generally, any $k$ consecutive integers have all $k$ distinct residues modulo $k$.
+     </p>
+     <p>
+      That gives a particularly clean way to construct a valid answer; it is not a claim that every valid collection must be consecutive.
+     </p>
+     <h2 id="topic-2">
+      2. Turn the sum into an equation
+     </h2>
+     <p>
+      Suppose the run begins at $a$ and has length $k$:
+     </p>
+     <p>
+      $$n=a+(a+1)+\cdots+(a+k-1).$$
+     </p>
+     <p>
+      Summing the progression gives
+     </p>
+     <p>
+      $$n=\frac{k(2a+k-1)}{2},$$
+     </p>
+     <p>
+      or equivalently,
+     </p>
+     <p>
+      $$\boxed{2n=k(2a+k-1).}$$
+     </p>
+     <p>
+      This is the key:
+      <strong>
+       a scheduling-looking problem about picking numbers is now a factorization problem
+      </strong>
+      .
+     </p>
+     <p>
+      Here's another way to arrive at the same equation. Write the run as the difference of two triangular numbers:
+     </p>
+     <p>
+      $$n=\sum_{i=1}^{x}i-\sum_{i=1}^{y}i
+=\frac{x(x+1)-y(y+1)}{2},$$
+     </p>
+     <p>
+      where $x&gt;y\ge0$. Factoring:
+     </p>
+     <p>
+      $$\boxed{(x-y)(x+y+1)=2n.}$$
+     </p>
+     <p>
+      Since the run contains $k=x-y$ numbers, this is the same formula. The factors $x-y$ and $x+y+1$ have
+      <strong>
+       opposite parity
+      </strong>
+      .
+     </p>
+     <h2 id="topic-3">
+      3. Why does an odd factor matter?
+     </h2>
+     <p>
+      If $n$ is odd and $n\ge3$, it is itself an odd factor. More generally, take any odd divisor $d&gt;1$ of $n$ and put $q=n/d$. There are two useful cases:
+     </p>
+     <ul>
+      <li>
+       <p>
+        If $q\ge(d+1)/2$, we get a run of
+        <strong>
+         $d$
+        </strong>
+        positive consecutive integers centered at $q$:
+       </p>
+       <p>
+        $$q-\frac{d-1}{2},\ldots,q+\frac{d-1}{2}.$$
+       </p>
+      </li>
+      <li>
+       <p>
+        If $q&lt;(d+1)/2$, we get a run of
+        <strong>
+         $2q$
+        </strong>
+        positive consecutive integers, starting at $(d-2q+1)/2$.
+       </p>
+      </li>
+     </ul>
+     <p>
+      Either way, we get a representation using more than one positive consecutive integer.
+     </p>
+     <p>
+      For example,
+     </p>
+     <p>
+      $$15=7+8=4+5+6=1+2+3+4+5.$$
+     </p>
+     <p>
+      Different factorizations lead to different run lengths. If the goal is to
+      <strong>
+       maximize $k$
+      </strong>
+      , we should examine the possible factor pairs, not merely find the first odd divisor.
+     </p>
+     <h2 id="topic-4">
+      4. What goes wrong for a power of two?
+     </h2>
+     <p>
+      Suppose $n=2^m$. Then
+     </p>
+     <p>
+      $$2n=2^{m+1}.$$
+     </p>
+     <p>
+      But in the factored equation
+     </p>
+     <p>
+      $$k(2a+k-1)=2n,$$
+     </p>
+     <p>
+      one factor must be odd and the other even (their sum is $2a+2k-1$, which is odd). Since every odd factor of $2^{m+1}$ is $1$, the odd factor must be $1$.
+     </p>
+     <p>
+      For a run with $k\ge2$ and $a\ge1$, however,
+      <strong>
+       both factors exceed 1
+      </strong>
+      : $k\ge2$ and $2a+k-1\ge3$. That's impossible.
+     </p>
+     <p>
+      So a power of two has
+      <strong>
+       no representation as a sum of two or more consecutive positive integers
+      </strong>
+      .
+     </p>
+     <p>
+      The qualification matters: every positive integer still has the trivial one-term representation $n=n$.
+     </p>
+     <h2 id="topic-5">
+      5. Finding the longest run
+     </h2>
+     <p>
+      We can look for valid values of $k$ directly from the factorization:
+     </p>
+     <p>
+      $$m=\frac{2n}{k},\qquad a=\frac{m-k+1}{2}.$$
+     </p>
+     <p>
+      A candidate length $k\ge2$ works if:
+     </p>
+     <ol>
+      <li>
+       $k$ divides $2n$;
+      </li>
+      <li>
+       $m-k+1$ is positive and even, making $a$ a positive integer.
+      </li>
+     </ol>
+     <p>
+      We can test those candidates and retain the largest valid length. This is clearer than relying on a special-purpose factorization shortcut before proving it.
+     </p>
+     <pre><code class="language-cpp">#include &lt;algorithm&gt;
+#include &lt;cstdint&gt;
+
+std::int64_t longestRun(std::int64_t n) {
+    if (n &lt;= 2) return -1; // require at least two terms
+
+    const std::int64_t twice = 2 * n; // ensure no overflow for your input bounds
+    std::int64_t best = -1;
+
+    for (std::int64_t k = 2; k &lt;= twice / k; ++k) {
+        if (twice % k != 0) continue;
+        const auto m = twice / k;
+        // a = (m - k + 1) / 2 must be a positive integer.
+        if (m &gt;= k + 1 &amp;&amp; (m - k + 1) % 2 == 0)
+            best = std::max(best, k);
+    }
+    return best;
+}
+</code></pre>
+     <p>
+      For positive consecutive terms, the maximum length satisfies $k(k+1)/2\le n$, so the loop need not examine larger $k$. The code assumes
+      <code>
+       2*n
+      </code>
+      fits in
+      <code>
+       int64_t
+      </code>
+      ; a production implementation should validate that bound or use a wider integer.
+     </p>
+     <h2 id="topic-6">
+      6. A small but important distinction
+     </h2>
+     <p>
+      <strong>
+       This construction establishes a consecutive-integer solution.
+      </strong>
+      The original problem also allows
+      <em>
+       nonconsecutive
+      </em>
+      collections whose residues are distinct. To prove that the longest consecutive run is the globally largest valid $k$, one needs an additional argument; that stronger statement is not established by the factorization alone.
+     </p>
+     <p>
+      Distinct integers need not have distinct remainders. For instance, $1$ and $3$ are distinct but both leave remainder $1$ modulo $2$. The residue condition must be checked separately, and proving the unrestricted maximum requires its own argument.
+     </p>
+     <p>
+      The insight I like is the move from
+      <strong>
+       an arithmetic progression to the factors of $2n$
+      </strong>
+      . Suddenly the special role of powers of two becomes intuitive, not mysterious.
+     </p>
+    </div>
+    <div class="article-end">
+     End of article ·
+     <a href="./blog.html">
+      More writing
+     </a>
+    </div>
+   </article>
+  </main>
+  <footer class="container footer">
+   <span>
+    © 2026 Kazi Istiak Toriqe
+   </span>
+   <a href="./blog.html">
+    ← All writing
+   </a>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>if(window.mermaid){mermaid.initialize({startOnLoad:true,theme:"neutral",securityLevel:"strict"});}</script>
+  <script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"}};</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+ </body>
+</html>
+

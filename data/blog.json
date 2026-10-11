@@ -1,0 +1,27 @@
+[
+  {
+    "slug": "timer-dispatcher",
+    "title": "One Alarm Clock, Many Jobs",
+    "file": "content/blog/timer_dispatcher_full_original.md"
+  },
+  {
+    "slug": "cpp-pointers-references",
+    "title": "Pointers, References, and the Objects Behind Them",
+    "file": "content/blog/cpp_pointers_references.md"
+  },
+  {
+    "slug": "four-consecutive-squares",
+    "title": "Four Consecutive Squares",
+    "file": "content/blog/four_consecutive_squares.md"
+  },
+  {
+    "slug": "odd-squares-mod8",
+    "title": "Why Odd Squares Leave Remainder One",
+    "file": "content/blog/odd_squares_mod8.md"
+  },
+  {
+    "slug": "consecutive-integer-sums",
+    "title": "The Hidden Factorization Behind Consecutive Sums",
+    "file": "content/blog/consecutive_integer_sums.md"
+  }
+]

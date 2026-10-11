@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>
+   Why Odd Squares Leave Remainder One | Kazi Istiak Toriqe
+  </title>
+  <link href="./assets/css/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <header class="site-header">
+   <div class="container nav-inner">
+    <a class="wordmark" href="./index.html">
+     Kazi Istiak Toriqe
+    </a>
+    <nav>
+     <a href="./index.html">
+      About
+     </a>
+     <a href="./index.html#research">
+      Research
+     </a>
+     <a href="./index.html#projects">
+      Projects
+     </a>
+     <a href="./blog.html">
+      Blog
+     </a>
+     <a href="./index.html#contact">
+      Contact
+     </a>
+    </nav>
+   </div>
+  </header>
+  <main class="container article-layout">
+   <aside class="article-side">
+    <a class="minor-link" href="./blog.html">
+     ← All posts
+    </a>
+    <div class="side-label">
+     Mathematics / Intuition
+    </div>
+    <p>
+     Squares · Modular arithmetic
+    </p>
+    <details class="article-toc">
+     <summary>
+      Sections
+     </summary>
+     <ol>
+      <li>
+       <a href="#topic-1">
+        Why is that useful?
+       </a>
+      </li>
+     </ol>
+    </details>
+   </aside>
+   <article class="article-paper">
+    <p class="eyebrow">
+     Mathematics / Intuition
+    </p>
+    <h1>
+     Why Odd Squares Leave Remainder One
+    </h1>
+    <p class="article-lead">
+     Squares · Modular arithmetic
+    </p>
+    <div class="article-divider">
+    </div>
+    <div class="article-copy markdown-body math-article">
+     <p>
+      Squares seem unpredictable until you ask a much smaller question:
+      <strong>
+       what remainder can a square have when divided by 8?
+      </strong>
+     </p>
+     <p>
+      Start with an odd integer. We can write it as $2n+1$, so its square is
+     </p>
+     <p>
+      $$(2n+1)^2=4n(n+1)+1.$$
+     </p>
+     <p>
+      The crucial fact isn't the multiplication. It is that $n$ and $n+1$ are consecutive—
+      <strong>
+       one of them must be even
+      </strong>
+      . Hence $n(n+1)$ is divisible by 2, and $4n(n+1)$ is divisible by 8.
+     </p>
+     <p>
+      So every odd square has the same remainder:
+     </p>
+     <p>
+      $$(2n+1)^2\equiv 1\pmod 8.$$
+     </p>
+     <h2 id="topic-1">
+      Why is that useful?
+     </h2>
+     <p>
+      Suppose somebody claims that a number congruent to 3 modulo 8 is a perfect square. It cannot be the square of an odd number (those leave 1); and it cannot be the square of an even number either (those leave 0 or 4).
+     </p>
+     <p>
+      This technique is useful because
+      <strong>
+       you don't need to know the square root to rule out a square
+      </strong>
+      . You only need one impossible remainder.
+     </p>
+     <p>
+      One small caveat: if a number has remainder 1 modulo 8, it
+      <em>
+       might
+      </em>
+      be a square—but that condition by itself does not prove it is one.
+     </p>
+    </div>
+    <div class="article-end">
+     End of article ·
+     <a href="./blog.html">
+      More writing
+     </a>
+    </div>
+   </article>
+  </main>
+  <footer class="container footer">
+   <span>
+    © 2026 Kazi Istiak Toriqe
+   </span>
+   <a href="./blog.html">
+    ← All writing
+   </a>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>if(window.mermaid){mermaid.initialize({startOnLoad:true,theme:"neutral",securityLevel:"strict"});}</script>
+  <script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"}};</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+ </body>
+</html>
+

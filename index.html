@@ -1,1459 +1,802 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tamim's Portfolio</title>
-
-  <!--
-    - favicon
-  -->
-  <link rel="shortcut icon" href="./assets/images/3d-avatar-male_lg.webp" type="image/x-icon">
-
-  <!--
-    - custom css link
-  -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Personal academic portfolio of Kazi Istiak Toriqe, prospective PhD applicant in computer systems.">
+  <title>Kazi Istiak Toriqe — Portfolio</title>
   <link rel="stylesheet" href="./assets/css/style.css">
-
-  <!--
-    - google font link
-  -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
-
 <body>
+  <header class="site-header">
+ <div class="container nav-inner">
+  <a class="wordmark" href="#home">
+   Kazi Istiak Toriqe
+  </a>
+  <nav aria-label="Navigation">
+   <a href="#about">
+    About
+   </a>
+   <a href="#research">
+    Research
+   </a>
+   <a href="#experience">
+    Experience
+   </a>
+   <a href="#projects">
+    Projects
+   </a>
+   <a href="./blog.html">
+    Blog
+   </a>
+   <a href="#education">
+    Education
+   </a>
+   <a href="#skills">
+    Skills
+   </a>
+   <a href="#contact">
+    Contact
+   </a>
+   <a href="https://example.com/my-cv.pdf" rel="noopener" target="_blank">
+    CV ↗
+   </a>
+  </nav>
+ </div>
+</header>
+  <main id="home">
+    <section class="intro container" id="about">
+ <div class="intro-copy">
+  <p class="eyebrow">
+   Prospective PhD applicant · Fall 2027
+  </p>
+  <h1>
+   Hello, I’m Kazi Istiak Toriqe and welcome to my little corner of the internet!
+  </h1>
+  <p>
+    I graduated from Bangladesh University of Engineering and Technology (BUET) with a bachelor's degree in Computer Science and Engineering. 
+    I always enjoy exploring how things work, especially when there's something interesting to figure out or an idea worth experimenting with. 
+    That curiosity eventually led me toward computer systems, an area I hope to explore and contribute further through research.
+  </p>
+  <p>
+    After graduating from BUET, I joined Samsung Research Bangladesh as a Research and Development Engineer. 
+    My work involves more than just developing software; before a solution makes its way into a product, 
+    we often need to investigate the underlying problem, explore possible approaches, 
+    and demonstrate that our proposed solution actually works. I've enjoyed this process of experimentation and validation, 
+    along with the practical challenges of turning ideas into reliable software. Outside work, I enjoy drawing, playing football, 
+    watching tennis, and reading about a variety of topics, both technical and non-technical.  
+  </p>
+    <p>
+    I want to pursue a PhD in Fall 2027 to deepen my research interests in computer systems, identify critical challenges and problems, explore new ideas and possible solutions in depth, and contribute to the field through meaningful research. This website is a collection of my projects, experiences, writings, and a few things I find interesting along the way.
+  </p>
+  <div class="interests-inline">
+   <h2>
+    Research interests
+   </h2>
+   <p>
+    Distributed systems, operating systems, runtime systems and analysis, lightweight execution, low-overhead communication and fault-tolerant coordination.
+   </p>
+  </div>
+  <div class="intro-actions">
+   <a class="btn secondary" href="#projects">
+    Selected work ↗
+   </a>
+   <a class="btn secondary" href="https://example.com/my-cv.pdf" rel="noopener" target="_blank">
+    CV (placeholder) ↗
+   </a>
+  </div>
+ </div>
+ <figure class="portrait-card">
+  <img src="assets/Toriqe.jpg" alt="Cox's Bazar, 2023">
+  <figcaption>
+   Photo taken on 2023, Cox's Bazar
+  </figcaption>
+ </figure>
+</section>
+    <section class="section container" id="research">
+ <div class="section-heading">
+  <div>
+   <p class="eyebrow">
+    01 / ACADEMIC WORK
+   </p>
+   <h2>
+    Research
+   </h2>
+  </div>
+ </div>
+ <div class="research-stack">
+  <article class="content-card">
+   <p class="eyebrow">
+    Undergraduate thesis · Manuscript under review
+   </p>
+   <h3>
+    Patient Similarity Detection via Contrastive Learning
+   </h3>
+   <p>
+    Undergraduate thesis on patient similarity detection using physiological signals from the Stanford Wearable PPG and PTB Diagnostic ECG datasets. 
+    Developed a novel contrastive loss function tailored to patient similarity learning and adapted ResNeXt and EfficientNet architectures for 1D time-series representation learning. 
+    Designed and optimized a K-nearest neighbors (KNN)-based inference pipeline for similarity search and label prediction over large patient databases, 
+    incorporating parallel processing to improve inference efficiency and reduce latency. Evaluated the proposed approach against existing baselines. 
+    Manuscript submitted to a Q1 journal (under review).   
+   </p>
+   <div class="inline-links">
+    <a href="https://cse.buet.ac.bd/faculty/faculty_detail/atif" rel="noopener" target="_blank">
+     Supervisor: Dr. Atif Hasan Rahman ↗
+    </a>
+    <a href="https://subangkar.github.io/" rel="noopener" target="_blank">
+     Collaborator: Subangkar Karmakar ↗
+    </a>
+   </div>
+  </article>
+ </div>
+</section>
+    
+<section class="section container" id="experience">
 
-  <!--
-    - #MAIN
-  -->
-
-  <main>
-
-    <!--
-      - #SIDEBAR
-    -->
-
-    <aside class="sidebar" data-sidebar>
-    <div class="sidebar-info">
-      <figure class="avatar-box">
-        <img src=https://avatars.githubusercontent.com/u/54908501?v=4 alt="Tamim Ehsan" width="80">
-      </figure>
-
-      <div class="info-content">
-        <h1 class="name" title=Mohammad Tamimul Ehsan>Mohammad <br/> Tamimul Ehsan</h1>
-        <!-- <p class="title">
-          Software Engineer, Chaldal
-          <br>
-          2023 - Present
-        </p> -->
-        
-      </div>
-
-      <button class="info_more-btn" data-sidebar-btn>
-        <span>Show Contacts</span>
-        <ion-icon name="chevron-down"></ion-icon>
-      </button>
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">02 / PROFESSIONAL JOURNEY</p>
+      <h2>Professional Experience</h2>
     </div>
-      <ul class="social-list">
-        
-            <li class="social-item">
-                <a href=https://www.linkedin.com/in/tamimehsan class="social-link" target="_blank" rel="noopener noreferrer">
-                  <ion-icon name="logo-linkedin"></ion-icon>
-                </a>
-              </li>
-        
+  </div>
 
-        
-            <li class="social-item">
-                <a href=https://github.com/tamimehsan class="social-link" target="_blank" rel="noopener noreferrer">
-                  <ion-icon name="logo-github"></ion-icon>
-                </a>
-              </li>
-        
+  <div class="experience-timeline">
 
-        
-            <li class="social-item">
-                <a href=https://codeforces.com/profile/tamimehsan class="social-link" target="_blank" rel="noopener noreferrer">
-                  <img src="assets/images/code-forces.svg" style="width: 18px; height: 18px;">
-                </a>
-              </li>
-        
-        
-        
-            <li class="social-item">
-                <a href=https://icpc.global/ICPCID/66E92YQND88T class="social-link" target="_blank" rel="noopener noreferrer">
-                  <img src="assets/images/icpc.svg" style="width: 18px; height: 18px;">
-                </a>
-              </li>
-        
-      </ul>
+    <div class="experience-company">
+      <div>
+        <h3>Samsung Research Bangladesh</h3>
+        <p>Software R&amp;D</p>
+      </div>
+      <span class="experience-date">May 2025 – Present</span>
     </div>
 
-    <div class="separator"></div>
-    <div class="sidebar-info_more">
-      <ul class="contacts-list">
+    <div class="timeline-items">
 
-        
-            <li class="contact-item">
-                <div class="icon-box">
-                  <ion-icon name="mail-outline"></ion-icon>
-                </div>
-                <div class="contact-info">
-                  <p class="contact-title">Email</p>
-                  <a href="mailto:tamimehsan99@gmail.com" class="contact-link">tamimehsan99@gmail.com</a>
-                </div>
-              </li>
-        
-        
+      <!-- Samsung Health Monitor -->
+      <article class="timeline-item">
+        <div class="timeline-marker"></div>
 
-        
-            <li class="contact-item">
-                <div class="icon-box">
-                  <ion-icon name="location-outline"></ion-icon>
-                </div>
-                <div class="contact-info">
-                  <p class="contact-title">Location</p>
-                  <address>Dhaka, Bangladesh</address>
-                </div>
-              </li>
-        
-      </ul>
-  </aside>
-
-    <!--
-      - #main-content
-    -->
-
-    <div class="main-content">
-
-      <!--
-        - #NAVBAR
-      -->
-
-      <nav class="navbar">
-        <ul class="navbar-list">
-          <li class="navbar-item">
-            <button class="navbar-link active" data-nav-link>About</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Skills</button>
-          </li>
-          
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Education</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Achievements</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Experience</button>
-          </li>
-          
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Projects</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Research</button>
-          </li>
-
-          <!-- <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Location</button>
-          </li> -->
-        </ul>
-      </nav>
-
-      <!--
-        - #ABOUT
-      -->
-
-      <article class="about active" data-page="about">
-
-    <header>
-      <h2 class="h2 article-title">About me</h2>
-    </header>
-
-    <section class="about-text">
-         
-            <p>Hello, I am Mohammad Tamimul Ehsan. I am currently working as a Software Engineer at Pridesys IT Ltd. Here we are working to develop a cloud based ERP solution for small and medium sized enterprises.</p>
-         
-            <p>I completed my Bachelor&#39;s degree at Computer Science and Engineering from BUET. I can describe my university life as a balance between academics and extra curricular activities. I am a very passionate competitive programmer. I love solving complex problems and break them down to simple tasks. I also participate in different hackathons and programming competitions and have achieved quite a few national and international awards.</p>
-         
-            <p>In terms of technology and framework, I am very comfortable with C++ and Java and have done many projects with them. I am also very proficient in Nodejs with PostgreSQL.</p>
-         
-            <p>I really love learning new things and others say I tend to catch new things very fast. I am also a good team player. Being part of teams I participated and won many programming and development related competitions. U have good leadership skills. In my college life and also in my university life I organized and volunteered in many national level events.</p>
-         
-            <p>My life motto is to be better than yesterday. I try to learn new things everyday. I try to follow a strict routine and punctuality. And apart from all these tech stuffs I really love traveling. I absolutely love hiking and trekking. And in my free time I read books or watch movies. I also love to talk with strangers about no particular topic whatsoever.</p>
-        
-  </section>
-    <div class="modal-container" data-modal-container>
-
-      <div class="overlay" data-overlay></div>
-
-      <section class="testimonials-modal">
-        <button class="modal-close-btn" data-modal-close-btn>
-          <ion-icon name="close-outline"></ion-icon>
-        </button>
-      </section>
-
-    </div>
-  </article>
-
-      <!--
-        - #ABOUT
-      -->
-
-      <article class="skills" data-page="skills">
-
-  <header>
-    <h2 class="h2 article-title">Skills</h2>
-  </header>
-
-  
-    <section class="timeline">
-      <div class="title-wrapper">
-        <div class="icon-box">
-          <ion-icon name="code-slash-outline"></ion-icon>
-        </div>
-        <h3 class="h3">
-          Languages
-        </h3>
-      </div>
-
-      <div >
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >C</span> -->
-                <img alt=C style="float: left;" src=https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&amp;badge=c&amp;badgeColor=white />
-                <!-- 
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                 -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >C++</span> -->
-                <img alt=C++ style="float: left;" src=https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&amp;badge=c%2B%2B&amp;badgeColor=white />
-                <!-- 
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                 -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Java</span> -->
-                <img alt=Java style="float: left;" src=https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&amp;logo=openjdk&amp;logoColor=white />
-                <!-- 
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                 -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Javascript</span> -->
-                <img alt=Javascript style="float: left;" src=https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&amp;logo=javascript&amp;logoColor=%23F7DF1E />
-                <!-- 
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                 -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Assembly</span> -->
-                <img alt=Assembly style="float: left;" src=https://img.shields.io/badge/assembly%20script-%23000000.svg?style=for-the-badge&amp;logo=assemblyscript&amp;logoColor=white />
-                <!-- 
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                 -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Bash</span> -->
-                <img alt=Bash style="float: left;" src=https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&amp;logo=gnu-bash&amp;logoColor=white />
-                <!-- 
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                 -->
-                
-          </div>
-          
-        
-      </div>
-    </section>
-    <br/>
-    <br/>
-    <div>  </div>
-    <hr>
-    <br/>
-    
-    <section class="timeline">
-      <div class="title-wrapper">
-        <div class="icon-box">
-          <ion-icon name="code-slash-outline"></ion-icon>
-        </div>
-        <h3 class="h3">
-          Backend
-        </h3>
-      </div>
-
-      <div >
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >NodeJS</span> -->
-                <img alt=NodeJS style="float: left;" src=https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&amp;logo=node.js&amp;logoColor=white />
-                <!-- 
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                 -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Spring Boot</span> -->
-                <img alt=Spring Boot style="float: left;" src=https://img.shields.io/badge/spring%20boot-%236DB33F.svg?style=for-the-badge&amp;logo=spring&amp;logoColor=white />
-                <!-- 
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                 -->
-                
-          </div>
-          
-        
-      </div>
-    </section>
-    <br/>
-    <br/>
-    <div>  </div>
-    <hr>
-    <br/>
-    
-    <section class="timeline">
-      <div class="title-wrapper">
-        <div class="icon-box">
-          <ion-icon name="code-slash-outline"></ion-icon>
-        </div>
-        <h3 class="h3">
-          Frontend
-        </h3>
-      </div>
-
-      <div >
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >ReactJs</span> -->
-                <img alt=ReactJs style="float: left;" src=https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&amp;logo=react&amp;logoColor=%2361DAFB />
-                <!-- 
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                 -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >EJS</span> -->
-                <img alt=EJS style="float: left;" src=https://img.shields.io/badge/ejs-6DA55F?style=for-the-badge&amp;logo=node.js&amp;logoColor=white />
-                <!-- 
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                 -->
-                
-          </div>
-          
-        
-      </div>
-    </section>
-    <br/>
-    <br/>
-    <div>  </div>
-    <hr>
-    <br/>
-    
-    <section class="timeline">
-      <div class="title-wrapper">
-        <div class="icon-box">
-          <ion-icon name="code-slash-outline"></ion-icon>
-        </div>
-        <h3 class="h3">
-          Data Systems
-        </h3>
-      </div>
-
-      <div >
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >PostgreSQL</span> -->
-                <img alt=PostgreSQL style="float: left;" src=https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&amp;logo=postgresql&amp;logoColor=white />
-                <!-- 
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                 -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >OracleDB</span> -->
-                <img alt=OracleDB style="float: left;" src=https://img.shields.io/badge/Oracle%20DB-F80000?style=for-the-badge&amp;logo=oracle&amp;logoColor=white />
-                <!-- 
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                
-                  <a style="float: left;" href=https://github.com/ > 📎 </a>  
-                 -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Redis</span> -->
-                <img alt=Redis style="float: left;" src=https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&amp;logo=redis&amp;logoColor=white />
-                <!--  -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Hadoop</span> -->
-                <img alt=Hadoop style="float: left;" src=https://img.shields.io/badge/Apache%20Hadoop-66CCFF?style=for-the-badge&amp;logo=apachehadoop&amp;logoColor=black />
-                <!--  -->
-                
-          </div>
-          
-        
-      </div>
-    </section>
-    <br/>
-    <br/>
-    <div>  </div>
-    <hr>
-    <br/>
-    
-    <section class="timeline">
-      <div class="title-wrapper">
-        <div class="icon-box">
-          <ion-icon name="code-slash-outline"></ion-icon>
-        </div>
-        <h3 class="h3">
-          Tools
-        </h3>
-      </div>
-
-      <div >
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Git</span> -->
-                <img alt=Git style="float: left;" src=https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&amp;logo=git&amp;logoColor=white />
-                <!--  -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Docker</span> -->
-                <img alt=Docker style="float: left;" src=https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&amp;logo=docker&amp;logoColor=white />
-                <!--  -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Kubernetes</span> -->
-                <img alt=Kubernetes style="float: left;" src=https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&amp;logo=kubernetes&amp;logoColor=white />
-                <!--  -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Hashicorp&#39;s Vault</span> -->
-                <img alt=Hashicorp&#39;s Vault style="float: left;" src=https://img.shields.io/badge/vault-%23FFEC6E.svg?style=for-the-badge&amp;logo=vault&amp;logoColor=black />
-                <!--  -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Nginx</span> -->
-                <img alt=Nginx style="float: left;" src=https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&amp;logo=nginx&amp;logoColor=white />
-                <!--  -->
-                
-          </div>
-          
-        
-      </div>
-    </section>
-    <br/>
-    <br/>
-    <div>  </div>
-    <hr>
-    <br/>
-    
-    <section class="timeline">
-      <div class="title-wrapper">
-        <div class="icon-box">
-          <ion-icon name="code-slash-outline"></ion-icon>
-        </div>
-        <h3 class="h3">
-          Testing
-        </h3>
-      </div>
-
-      <div >
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >JUnit5</span> -->
-                <img alt=JUnit5 style="float: left;" src=https://img.shields.io/badge/junit5-%2325A162.svg?style=for-the-badge&amp;logo=junit5&amp;logoColor=white />
-                <!--  -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Testcontainer</span> -->
-                <img alt=Testcontainer style="float: left;" src=https://img.shields.io/badge/TestContainer-%230db7ed.svg?style=for-the-badge&amp;logo=docker&amp;logoColor=white />
-                <!--  -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Graphana K6</span> -->
-                <img alt=Graphana K6 style="float: left;" src=https://img.shields.io/badge/K6-%237D64FF.svg?style=for-the-badge&amp;logo=microsoftazure&amp;logoColor=white />
-                <!--  -->
-                
-          </div>
-          
-        
-      </div>
-    </section>
-    <br/>
-    <br/>
-    <div>  </div>
-    <hr>
-    <br/>
-    
-    <section class="timeline">
-      <div class="title-wrapper">
-        <div class="icon-box">
-          <ion-icon name="code-slash-outline"></ion-icon>
-        </div>
-        <h3 class="h3">
-          DevOps
-        </h3>
-      </div>
-
-      <div >
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Terraform</span> -->
-                <img alt=Terraform style="float: left;" src=https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&amp;logo=terraform&amp;logoColor=white />
-                <!--  -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Helm</span> -->
-                <img alt=Helm style="float: left;" src=https://img.shields.io/badge/helm-%230e1689.svg?style=for-the-badge&amp;logo=helm&amp;logoColor=white />
-                <!--  -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Github Workflow</span> -->
-                <img alt=Github Workflow style="float: left;" src=https://img.shields.io/badge/github%20workflow-%232671E5.svg?style=for-the-badge&amp;logo=githubactions&amp;logoColor=white />
-                <!--  -->
-                
-          </div>
-          
-        
-      </div>
-    </section>
-    <br/>
-    <br/>
-    <div>  </div>
-    <hr>
-    <br/>
-    
-    <section class="timeline">
-      <div class="title-wrapper">
-        <div class="icon-box">
-          <ion-icon name="code-slash-outline"></ion-icon>
-        </div>
-        <h3 class="h3">
-          Clouds
-        </h3>
-      </div>
-
-      <div >
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Azure Cloud Service</span> -->
-                <img alt=Azure Cloud Service style="float: left;" src=https://img.shields.io/badge/azure%20cloud-%230072C6.svg?style=for-the-badge&amp;logo=microsoftazure&amp;logoColor=white />
-                <!--  -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Azure Kubernetes Service</span> -->
-                <img alt=Azure Kubernetes Service style="float: left;" src=https://img.shields.io/badge/azure%20kubernetes-%230072C6.svg?style=for-the-badge&amp;logo=microsoftazure&amp;logoColor=white />
-                <!--  -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Azure Cloud Storage</span> -->
-                <img alt=Azure Cloud Storage style="float: left;" src=https://img.shields.io/badge/azure%20storage-%230072C6.svg?style=for-the-badge&amp;logo=microsoftazure&amp;logoColor=white />
-                <!--  -->
-                
-          </div>
-          
-        
-          <div  style="float: left; margin-right: 8px; margin-bottom: 8px;">
-                <!-- <span class="tags" style="font-size: 20px; float: left;" >Azure Container Registry</span> -->
-                <img alt=Azure Container Registry style="float: left;" src=https://img.shields.io/badge/azure%20container%20registry-%230072C6.svg?style=for-the-badge&amp;logo=microsoftazure&amp;logoColor=white />
-                <!--  -->
-                
-          </div>
-          
-        
-      </div>
-    </section>
-    <br/>
-    <br/>
-    <div>  </div>
-    <hr>
-    <br/>
-    
-</article>
-      
-      <!--
-        - #EDUCATION
-      -->
-      <article class="education" data-page="education">
-
-    <header>
-        <h2 class="h2 article-title">Education</h2>
-    </header>
-
-    <section class="timeline">
-      <ol class="timeline-list">
-
-        
-          <li class="timeline-item">
-            <div class="education-header">
-              <h4 class="h4 timeline-item-title">Bangladesh University of Engineering and Technology</h4>
-              <span>Apr 2019 - May 2024</span>
+        <div class="timeline-card">
+          <div class="timeline-card-header">
+            <div>
+              <p class="project-meta">HEALTH MONITORING SYSTEMS</p>
+              <h3>Samsung Health Monitor · Sleep Apnea</h3>
             </div>
-            <div class="education-header">
-              <h5 class="h5 timeline-item-subtitle">B.Sc. in Computer Science and Engineering</h5>
-              <span>CGPA: 3.90/4.00</span>
-            </div>
-            <p class="timeline-text">
-              Ranked in the top 15% of class with two Dean&#39;s List awards for merit. Additionally, was recognized once for outstanding extra curricular activities. 
-            </p>
-            
-              <div class="multicol-list">
-                <div class="blog-text" >Notable Courses</div>
-                <ul>
-                  
-                    <li><p class="timeline-text">CSE 305 - Computer Architecture</p></li>
-                  
-                    <li><p class="timeline-text">CSE 307 - Software Engineering</p></li>
-                  
-                    <li><p class="timeline-text">CSE 309 - Compiler Design</p></li>
-                  
-                    <li><p class="timeline-text">CSE 313 - Operating Systems</p></li>
-                  
-                    <li><p class="timeline-text">CSE 317 - Artificial Intelligence</p></li>
-                  
-                    <li><p class="timeline-text">CSE 321 - Computer Networks</p></li>
-                  
-                    <li><p class="timeline-text">CSE 405 - Computer Security</p></li>
-                  
-                    <li><p class="timeline-text">CSE 409 - Computer Graphics</p></li>
-                  
-                    <li><p class="timeline-text">CSE 463 - Introduction to Bioinformatics</p></li>
-                  
-                    <li><p class="timeline-text">CSE 471 - Machine Learning</p></li>
-                  
-                    <li><p class="timeline-text">MATH 245 - Statistics and Probability</p></li>
-                  
-                    <li><p class="timeline-text">MATH 247 - Linear Algebra</p></li>
-                  
-                </ul>
-              </div>
-            
-          </li>
-        
-          <li class="timeline-item">
-            <div class="education-header">
-              <h4 class="h4 timeline-item-title">Notre Dame College, Dhaka</h4>
-              <span>2018</span>
-            </div>
-            <div class="education-header">
-              <h5 class="h5 timeline-item-subtitle">Higher Secondary Certificate (HSC)</h5>
-              <span>GPA: 5.00/5.00</span>
-            </div>
-            <p class="timeline-text">
-              
-            </p>
-            
-          </li>
-        
-          <li class="timeline-item">
-            <div class="education-header">
-              <h4 class="h4 timeline-item-title">Ideal School &amp; College, Motijheel, Dhaka</h4>
-              <span>2016</span>
-            </div>
-            <div class="education-header">
-              <h5 class="h5 timeline-item-subtitle">Secondary School Certificate (SSC)</h5>
-              <span>GPA: 5.00/5.00</span>
-            </div>
-            <p class="timeline-text">
-              Received board scholarship.
-            </p>
-            
-          </li>
-        
-       
-      </ol>
+          </div>
 
-    </section>
-  </article>
-
-      <!--
-        - #ACHIEVEMENTS
-      -->
-      <article class="achievements" data-page="achievements">
-
-    <header>
-      <h2 class="h2 article-title">Achievements</h2>
-    </header>
-
-    
-        <section class="timeline">
-            <div class="title-wrapper">
-              <div class="icon-box">
-                <ion-icon name="trophy-outline"></ion-icon>
-              </div>
-              <h3 class="h3">Hackathons</h3>
-            </div>
-            <ol class="timeline-list">
-                
-                    <li class="timeline-item">
-                        <div class="education-header">
-                            <h4 class="h4 timeline-item-title">Nasa Space Apps Challenge 2020</h4>
-                            <span>Global</span>
-                        </div>
-                        <div class="education-header">
-                            <span>Honorable Mention</span>
-                            <span>January 2021</span>
-                        </div>
-                        <p class="timeline-text">
-                            Our team &#34;BUET Zenith&#34; became Champion in Regional round and directly qualified for the global round and got honorable mention in the global round.
-                        </p>
-                    </li>
-                
-                    <li class="timeline-item">
-                        <div class="education-header">
-                            <h4 class="h4 timeline-item-title">National STEM Competition 2021</h4>
-                            <span>Dhaka, Bangladesh</span>
-                        </div>
-                        <div class="education-header">
-                            <span>Champion</span>
-                            <span>December 2021</span>
-                        </div>
-                        <p class="timeline-text">
-                            BUET IDRICO proposed a IOT based solution to the problem of water usage and distribution management for city water supplier WASA and became champion.
-                        </p>
-                    </li>
-                
-                    <li class="timeline-item">
-                        <div class="education-header">
-                            <h4 class="h4 timeline-item-title">International Blockchain Olympiad 2022</h4>
-                            <span>Global</span>
-                        </div>
-                        <div class="education-header">
-                            <span>Honorable Mention</span>
-                            <span>June 2022</span>
-                        </div>
-                        <p class="timeline-text">
-                            Our team spondon developed &#34;A Blockchain Based Approach to Digitalize Health Sector for Better Transparency, Privacy and Security&#34; and bacame 1st Runner Up in Blockchain Olympiad Bangladesh 2022 and recieved honorable mention International round.
-                        </p>
-                    </li>
-                
-                    <li class="timeline-item">
-                        <div class="education-header">
-                            <h4 class="h4 timeline-item-title">Code Samurai 2022</h4>
-                            <span>Dhaka, Bangladesh</span>
-                        </div>
-                        <div class="education-header">
-                            <span>1st Runners Up</span>
-                            <span>Decemeber 2022</span>
-                        </div>
-                        <p class="timeline-text">
-                            Our team BUET Storm&#39;s End developed a solution for JICA to monitor the progress of their projects in Bangladesh and became 1st Runners Up.
-                        </p>
-                    </li>
-                
-            </ol>
-        </section>
-    
-        <section class="timeline">
-            <div class="title-wrapper">
-              <div class="icon-box">
-                <ion-icon name="trophy-outline"></ion-icon>
-              </div>
-              <h3 class="h3">Programming Competitions</h3>
-            </div>
-            <ol class="timeline-list">
-                
-                    <li class="timeline-item">
-                        <div class="education-header">
-                            <h4 class="h4 timeline-item-title">ICPC Dhaka Regional Final 2020</h4>
-                            <span>Dhaka, Bangladesh</span>
-                        </div>
-                        <div class="education-header">
-                            <span>Ranked 7th</span>
-                            <span>August 2021</span>
-                        </div>
-                        <p class="timeline-text">
-                            
-                        </p>
-                    </li>
-                
-                    <li class="timeline-item">
-                        <div class="education-header">
-                            <h4 class="h4 timeline-item-title">ICPC ASIA DHAKA REGIONAL CONTEST 2021</h4>
-                            <span>Dhaka, Bangladesh</span>
-                        </div>
-                        <div class="education-header">
-                            <span>Ranked 8th</span>
-                            <span>October 2022</span>
-                        </div>
-                        <p class="timeline-text">
-                            
-                        </p>
-                    </li>
-                
-                    <li class="timeline-item">
-                        <div class="education-header">
-                            <h4 class="h4 timeline-item-title">ICPC ASIA DHAKA REGIONAL CONTEST 2023</h4>
-                            <span>Dhaka, Bangladesh</span>
-                        </div>
-                        <div class="education-header">
-                            <span>Ranked 8th</span>
-                            <span>October 2023</span>
-                        </div>
-                        <p class="timeline-text">
-                            
-                        </p>
-                    </li>
-                
-                    <li class="timeline-item">
-                        <div class="education-header">
-                            <h4 class="h4 timeline-item-title">RUET IUPC 2022</h4>
-                            <span>Rajshahi, Bangladesh</span>
-                        </div>
-                        <div class="education-header">
-                            <span>Ranked 10th</span>
-                            <span>June 2022</span>
-                        </div>
-                        <p class="timeline-text">
-                            
-                        </p>
-                    </li>
-                
-                    <li class="timeline-item">
-                        <div class="education-header">
-                            <h4 class="h4 timeline-item-title">SUST IUPC 2022</h4>
-                            <span>Sylhet, Bangladesh</span>
-                        </div>
-                        <div class="education-header">
-                            <span>Ranked 7th</span>
-                            <span>June 2022</span>
-                        </div>
-                        <p class="timeline-text">
-                            
-                        </p>
-                    </li>
-                
-            </ol>
-        </section>
-    
-
-   
-    
-</article>
-
-      <!--
-        - #EXPERIENCE
-      -->
-      <article class="experience" data-page="experience">
-
-    <header>
-      <h2 class="h2 article-title">Experiences</h2>
-    </header>
-
-    
-        <section class="timeline">
-            <div class="title-wrapper">
-              <div class="icon-box">
-                <ion-icon name="trophy-outline"></ion-icon>
-              </div>
-              <h3 class="h3">Pridesys IT Ltd</h3>
-            </div>
-            <!-- <p class="timeline-text">
-                
-            </p> -->
-            <ol class="timeline-list">
-                
-                <p class="timeline-text">  </p> <br/>
-                
-                
-                    <li class="timeline-item">
-                        <div class="education-header">
-                            <h3 class="h3 timeline-item-title">Software Engineer II</h3>
-                            <span>June 2024 - Present</span>
-                        </div>
-                        <div class="education-header">
-                            <span>Dhaka, Bangladesh</span>
-                            <!-- <span>June 2024 - Present</span> -->
-                        </div>
-                        <br>
-                        <p class="timeline-text">
-                            
-                        </p>
-
-                        
-                            <br/>
-                            <!-- <p class="timeline-text">Some of my Notable works are:</p> -->
-                            <div style="margin-left: 15px;"></div>
-                            <ul>
-                              
-                                <li class="circle"><p class="timeline-text-bulletpoint">Redesigned application from a monolithic to microservices architecture, using Kafka to decouple services, which improved system reliability, and fault isolation, facilitated independent service scaling, and decreased deployment times.</p></li>
-                              
-                                <li class="circle"><p class="timeline-text-bulletpoint">Incorporated CI/CD with github workflows, accelerating integration and deployment across multiple microservices and reducing development time by 20%</p></li>
-                              
-                                <li class="circle"><p class="timeline-text-bulletpoint">Used Helm for k8s package management, Hashicorp’s Vault for secret management inside K8s, Terraform and Ansible for infrastructure provision and management</p></li>
-                              
-                            </ul>
-                          
-                        
-
-                    </li>
-                
-                    <li class="timeline-item">
-                        <div class="education-header">
-                            <h3 class="h3 timeline-item-title">Junior Software Engineer</h3>
-                            <span>Oct 2023 - May 2024</span>
-                        </div>
-                        <div class="education-header">
-                            <span>Dhaka, Bangladesh</span>
-                            <!-- <span>Oct 2023 - May 2024</span> -->
-                        </div>
-                        <br>
-                        <p class="timeline-text">
-                            
-                        </p>
-
-                        
-                            <br/>
-                            <!-- <p class="timeline-text">Some of my Notable works are:</p> -->
-                            <div style="margin-left: 15px;"></div>
-                            <ul>
-                              
-                                <li class="circle"><p class="timeline-text-bulletpoint">Shifted the backend architecture from deprecated Oracle Forms to Spring Boot 3 resulting in better performance, and security, with support for modern RESTful APIs and a reduction in maintenance costs.</p></li>
-                              
-                                <li class="circle"><p class="timeline-text-bulletpoint">Shifted the database from Oracle to PostgreSQL which reduced the overall cost by 70%</p></li>
-                              
-                                <li class="circle"><p class="timeline-text-bulletpoint">Successfully deployed the backend and database of the cloud ERP on ACS (Azure Cloud Service) using AKS (Azure Kubernetes Service), ACR (Azure Container Registry), Cloud storage and NGINX which in turn increased reliability and availability by 20% and reduced infrastructure cost by appx 30%</p></li>
-                              
-                            </ul>
-                          
-                        
-
-                    </li>
-                
-            </ol>
-        </section>
-        <hr>
-        <br>
-    
-        <section class="timeline">
-            <div class="title-wrapper">
-              <div class="icon-box">
-                <ion-icon name="trophy-outline"></ion-icon>
-              </div>
-              <h3 class="h3">ICT Cell, BUET</h3>
-            </div>
-            <!-- <p class="timeline-text">
-                
-            </p> -->
-            <ol class="timeline-list">
-                
-                <p class="timeline-text">  </p> <br/>
-                
-                
-                    <li class="timeline-item">
-                        <div class="education-header">
-                            <h3 class="h3 timeline-item-title">Junior Backend Developer</h3>
-                            <span>Oct 2021 - Mar 2023</span>
-                        </div>
-                        <div class="education-header">
-                            <span>Dhaka, Bangladesh</span>
-                            <!-- <span>Oct 2021 - Mar 2023</span> -->
-                        </div>
-                        <br>
-                        <p class="timeline-text">
-                            I worked as a backend developer at ICT Cell of BUET. My primary goal was to develop a job portal for BUET aiming to eliminate manual book keeping. I was involved in designing the overall architecture and implementing system. Additionally, I contributed to the development of backend and deployment. Some of my notable works include:
-                        </p>
-
-                        
-                            <br/>
-                            <!-- <p class="timeline-text">Some of my Notable works are:</p> -->
-                            <div style="margin-left: 15px;"></div>
-                            <ul>
-                              
-                                <li class="circle"><p class="timeline-text-bulletpoint">Designed and developed the application architecture for the job portal which decreased the overall life cycle of an application from 3 months to 1 week.</p></li>
-                              
-                                <li class="circle"><p class="timeline-text-bulletpoint">Designed and developed the application scrutiny system which reduced the time to scrutinize an application from 1 month to 1 week.</p></li>
-                              
-                                <li class="circle"><p class="timeline-text-bulletpoint">The overall system improved the communication between multiple departments and reduced the time to hire a candidate by 300%.</p></li>
-                              
-                                <li class="circle"><p class="timeline-text-bulletpoint">Developed the backend for the job listing system which completely removed the necessity of manual job posting and decreasing the cost by 100%</p></li>
-                              
-                                <li class="circle"><p class="timeline-text-bulletpoint">Automated the deployment of the system using github actions which reduced the deployment time by 50%.</p></li>
-                              
-                                <li class="circle"><p class="timeline-text-bulletpoint">The system is actively being used by BUET for hiring and has facilitated more than 10,000 applicants from the start of the system.</p></li>
-                              
-                            </ul>
-                          
-                        
-
-                    </li>
-                
-            </ol>
-        </section>
-        <hr>
-        <br>
-    
-
-   
-    
-</article>
-
-      <!--
-        - #PROJECTS
-      -->
-      <article class="projects" data-page="projects">
-
-    <header>
-      <h2 class="h2 article-title">Projects</h2>
-    </header>
-
-    <section class="blog-posts">
-      <ul class="blog-posts-list">
-        
-        
-          <li class="blog-post-item">
-            <figure class="blog-banner-box">
-              <img src="./assets/images/algoviz.jpg" alt="Algorithm Visualizer" loading="lazy">
-            </figure>
-              <div class="blog-content">
-                <div class="blog-header">
-                  <h3 class="h3 blog-item-title">Algorithm Visualizer</h3>
-                  <div class="project-linkes">
-                    <a href="https://github.com/TamimEhsan/AlgorithmVisualizer" target="_blank" rel="noopener noreferrer">
-                      <ion-icon name="logo-github"></ion-icon>
-                    </a>
-                    
-                  </div>
-                </div>
-                <div class="">
-                  🏷️
-                    
-                      <code class="tags">React</code>
-                      
-                    
-                  
-                    <span class="dot"></span>
-                     <!-- <br/> -->
-                     
-                  <time class="blog-text" datetime="2021">2021</time>
-                </div>
-                 <hr/> 
-
-                <p class="blog-text">
-                  Designed and implemented a web app that illustrates more than 20 algorithms, assisting over 50,000 people in grasping the step by step processes of these algorithms. The algorithms were broken down to simple pieces and then used different self made methods to visualize them.
-                </p>
-              </div>
-          </li>
-        
-          <li class="blog-post-item">
-            <figure class="blog-banner-box">
-              <img src="./assets/images/kagoj.jpg" alt="kagOJ" loading="lazy">
-            </figure>
-              <div class="blog-content">
-                <div class="blog-header">
-                  <h3 class="h3 blog-item-title">kagOJ</h3>
-                  <div class="project-linkes">
-                    <a href="https://github.com/TamimEhsan/KagOJ" target="_blank" rel="noopener noreferrer">
-                      <ion-icon name="logo-github"></ion-icon>
-                    </a>
-                    
-                  </div>
-                </div>
-                <div class="">
-                  🏷️
-                    
-                      <code class="tags">Nodejs</code>
-                      
-                    
-                      <code class="tags">React</code>
-                      
-                    
-                      <code class="tags">PostgreSQL</code>
-                      
-                    
-                  
-                    <span class="dot"></span>
-                     <!-- <br/> -->
-                     
-                  <time class="blog-text" datetime="2022">2022</time>
-                </div>
-                 <hr/> 
-
-                <p class="blog-text">
-                  Built an online judge platform specialized to host lab test and evaluation of CSE, BUET. Automated code compilation, validation and evaluation are aimed to provide efficiency to both the teachers and students. Built the sandbox using seccomp rules and cgroups to run the process in isolated and restricted environment.
-                </p>
-              </div>
-          </li>
-        
-          <li class="blog-post-item">
-            <figure class="blog-banner-box">
-              <img src="./assets/images/compiler.jpg" alt="C Compiler" loading="lazy">
-            </figure>
-              <div class="blog-content">
-                <div class="blog-header">
-                  <h3 class="h3 blog-item-title">C Compiler</h3>
-                  <div class="project-linkes">
-                    <a href="https://github.com/TamimEhsan/C-Compiler" target="_blank" rel="noopener noreferrer">
-                      <ion-icon name="logo-github"></ion-icon>
-                    </a>
-                    
-                  </div>
-                </div>
-                <div class="">
-                  🏷️
-                    
-                      <code class="tags">Bison</code>
-                      
-                    
-                      <code class="tags">Yacc</code>
-                      
-                    
-                      <code class="tags">C</code>
-                      
-                    
-                  
-                    <span class="dot"></span>
-                     <!-- <br/> -->
-                     
-                  <time class="blog-text" datetime="2023">2023</time>
-                </div>
-                 <hr/> 
-
-                <p class="blog-text">
-                  Built a compiler from scratch with modern optimizations for a subset of C language.
-                </p>
-              </div>
-          </li>
-        
-          <li class="blog-post-item">
-            <figure class="blog-banner-box">
-              <img src="./assets/images/rokomari.jpg" alt="Rokomari" loading="lazy">
-            </figure>
-              <div class="blog-content">
-                <div class="blog-header">
-                  <h3 class="h3 blog-item-title">Rokomari</h3>
-                  <div class="project-linkes">
-                    <a href="https://github.com/TamimEhsan/SQuirreL" target="_blank" rel="noopener noreferrer">
-                      <ion-icon name="logo-github"></ion-icon>
-                    </a>
-                    
-                      <a href="https://youtu.be/eeUI5hNmdYo?si=_fHloVP1bic4cctq" target="_blank" rel="noopener noreferrer">
-                        <ion-icon name="logo-youtube"></ion-icon>
-                      </a>
-                    
-                  </div>
-                </div>
-                <div class="">
-                  🏷️
-                    
-                      <code class="tags">Nodejs</code>
-                      
-                    
-                      <code class="tags">PostgreSQL</code>
-                      
-                    
-                  
-                    <span class="dot"></span>
-                     <!-- <br/> -->
-                     
-                  <time class="blog-text" datetime="2020">2020</time>
-                </div>
-                 <hr/> 
-
-                <p class="blog-text">
-                  Mimics the most popular Bangladeshi online bookstore with separate admin and buyer module. Nearly every feature from the original website was built.
-                </p>
-              </div>
-          </li>
-        
-          <li class="blog-post-item">
-            <figure class="blog-banner-box">
-              <img src="./assets/images/ecosync.jpg" alt="EcoSync" loading="lazy">
-            </figure>
-              <div class="blog-content">
-                <div class="blog-header">
-                  <h3 class="h3 blog-item-title">EcoSync</h3>
-                  <div class="project-linkes">
-                    <a href="https://github.com/BUET-BeeCrypt/EcoSync" target="_blank" rel="noopener noreferrer">
-                      <ion-icon name="logo-github"></ion-icon>
-                    </a>
-                    
-                  </div>
-                </div>
-                <div class="">
-                  🏷️
-                    
-                      <code class="tags">Nodejs</code>
-                      
-                    
-                      <code class="tags">React</code>
-                      
-                    
-                      <code class="tags">PostgreSQL</code>
-                      
-                    
-                  
-                    <span class="dot"></span>
-                     <!-- <br/> -->
-                     
-                  <time class="blog-text" datetime="2020">2020</time>
-                </div>
-                 <hr/> 
-
-                <p class="blog-text">
-                  Built a system for the purpose of garbage management of Dhaka North City Corporation. It automates the process of documenting reports, optimum assignment of trucks, routing system etc. Developed a optimal delivery system with the help of K means clustering. A optimal routing was developed with travelling salesman problem (TSP) and 3/2 approximation of TSP with the help of Valhalla open source routing engine and Google street map SDK.
-                </p>
-              </div>
-          </li>
-        
-
-      </ul>
-
-    </section>
-
-  </article>
-
-      <!--
-        - #RESEARCH
-      -->
-      
-      <article class="research" data-page="research">
-
-    <header>
-      <h2 class="h2 article-title">Research</h2>
-    </header>
-
-    <section class="timeline">
-      <ol class="timeline-list">
-
-        
-          <li class="timeline-item">
-            <h4 class="h4 timeline-item-title">Faster and Improved CD-MAWS with Suffix Automata</h4>
-            <h5 class="h5 timeline-item-subtitle-research">Undergraduate thesis work</h5>
-            
-                <h5 class="h5 timeline-item-subtitle-research">Co-authors: 
-                    
-                        Dr. M. Saifur Rahman (Supervisor)
-                        
-                    
-                </h5>
-            
-            
-                <h5 class="h5 timeline-item-subtitle-research">Keywords: 
-                    
-                        Phylogeny
-                         , 
-                    
-                        Suffix Automata
-                        
-                    
-                </h5>
-            
-              
-            <br>
-            <p class="timeline-text-bulletpoint">
-              We introduce a refined CD-MAWS method for phylogeny estimation, significantly reducing computational complexity from max(O(m^n), O(m^n log n)) to max(O(m^n), O(mnk)) while maintaining tree quality. Here, m is the number of species, n is the size of DNA of a species, and k is the maximum MAW length. This advancement is achieved through a revised cosine distance calculation method, binary encoding of MAWs, and the adoption of suffix automata for MAW generation, addressing the main computational bottleneck and setting a better runtime for alignment-free phylogenetic analysis
-            </p>
-          </li>
-        
-
-      </ol>
-
-    </section>
-  </article>
-      
-      <!--
-        - #PORTFOLIO
-      -->
-
-      <article class="portfolio" data-page="portfolio">
-
-        <header>
-          <h2 class="h2 article-title">Portfolio</h2>
-        </header>
-
-        <section class="projects">
-
-          <ul class="filter-list">
-
-            <li class="filter-item">
-              <button class="active" data-filter-btn>All</button>
+          <ul>
+            <li>
+              Designed asynchronous message protocols between
+              Wear OS and Android for the Sleep Apnea feature,
+              collaborating with Samsung Research America.
             </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Web design</button>
+            <li>
+              Worked on sensor-data collection, session
+              management, and recovery following device
+              reboots, permission changes, and failures.
             </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Applications</button>
+            <li>
+              Contributed to health-data backup, restoration,
+              and synchronization interfaces using Samsung
+              Health SDK, collaborating with Samsung Korea.
             </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Web development</button>
+            <li>
+              Reduced unnecessary sensor activity and polling;
+              refactored connection handling with approximately
+              2× faster connection establishment
+              (as measured internally).
             </li>
-
           </ul>
 
-          <div class="filter-select-box">
-
-            <button class="filter-select" data-select>
-
-              <div class="select-value" data-selecct-value>Select category</div>
-
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
-
-            </button>
-
-            <ul class="select-list">
-
-              <li class="select-item">
-                <button data-select-item>All</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Web design</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Applications</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Web development</button>
-              </li>
-
-            </ul>
-
+          <div class="tags">
+            <span class="tag">Asynchronous Messaging</span>
+            <span class="tag">Session Management</span>
+            <span class="tag">Fault Recovery</span>
+            <span class="tag">Data Backup</span>
+            <span class="tag">Resource Efficiency</span>
           </div>
-
-          <ul class="project-list">
-
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-1.jpg" alt="finance" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Finance</h3>
-
-                <p class="project-category">Web development</p>
-
-              </a>
-            </li>
-
-          </ul>
-
-        </section>
-
+        </div>
       </article>
 
-     
+      <!-- FlashShare -->
+      <article class="timeline-item">
+        <div class="timeline-marker"></div>
+
+        <div class="timeline-card">
+          <div class="timeline-card-header">
+            <div>
+              <p class="project-meta">NETWORKED SYSTEMS</p>
+              <h3>
+                FlashShare · Fault-Tolerant LAN File Sharing
+              </h3>
+            </div>
+
+            <span class="timeline-status">Ongoing</span>
+          </div>
+
+          <ul>
+            <li>
+              Designed a high-throughput peer-to-peer system
+              for large LAN transfers using fanout and
+              relay topologies.
+            </li>
+            <li>
+              Separated user-space control protocols from
+              the bulk data path, implementing direct
+              transfers using Linux sendfile().
+            </li>
+            <li>
+              Designed progress-aware recovery after relay failures with proper state tracking and appropiate control plane mechanisms.
+            </li>
+            <li>
+              Exploring splice()/tee() for low-copy relay
+              forwarding.
+            </li>
+          </ul>
+
+          <div class="tags">
+            <span class="tag">TCP</span>
+            <span class="tag">Relay &amp; Fanout</span>
+            <span class="tag">Linux sendfile()</span>
+            <span class="tag">splice()/tee()</span>
+            <span class="tag">Failure Recovery</span>
+          </div>
+
+          <a class="project-link"
+             href="https://github.com/Superb-Man/flashshare"
+             target="_blank" rel="noopener">
+            View repository ↗
+          </a>
+        </div>
+      </article>
 
     </div>
+  </div>
 
+</section>
+    <section class="section container" id="projects">
+ <div class="section-heading">
+  <div>
+   <p class="eyebrow">
+    03 / WORK I HAVE BUILT
+   </p>
+   <h2>
+    Projects
+   </h2>
+  </div>
+  <p>
+   Selected implementations, experiments, utilities, and games.
+  </p>
+ </div>
+ <div class="project-category">
+  <h3>
+   Experimental Projects
+  </h3>
+  <div class="project-grid">
+   <article class="project-card">
+    <p class="project-meta">
+     Logless replication and recovery · Oct 2025 – Present
+    </p>
+    <h4>
+     disKeyV
+    </h4>
+    <p>
+     An ongoing experimental logless distributed key–value store built around segment-based replication and recovery. It uses TCP communication, heartbeat-based failure detection and leader transitions, with crash recovery and safe-read handling. Further work considers software-emulated RDMA-style transport and recovery correctness.
+    </p>
+    <div class="tags">
+     <span class="tag">
+      Distributed Storage
+     </span>
+     <span class="tag">
+      Replication
+     </span>
+     <span class="tag">
+      Recovery
+     </span>
+    </div>
+    <a class="minor-link" href="https://cse.buet.ac.bd/faculty/faculty_detail/adnan" rel="noopener" target="_blank">
+     Course project supervisor: Dr. Abdullah Adnan ↗
+    </a>
+    <a class="project-link" href="https://github.com/Superb-Man/disKeyV" rel="noopener" target="_blank">
+     View repository ↗
+    </a>
+   </article>
+  </div>
+ </div>
+ <div class="project-category">
+  <h3>
+   Selected Systems Projects
+  </h3>
+  <div class="project-grid">
+   <article class="project-card">
+    <p class="project-meta">
+     Lightweight execution on Linux · 2025
+    </p>
+    <h4>
+     User-Level Thread Library
+    </h4>
+    <p>
+     Built a Linux user-level threading library from scratch with cooperative and preemptive scheduling, context switching, thread lifecycle management, and sleep/wake-up mechanisms.
+    </p>
+    <div class="tags">
+     <span class="tag">
+      C
+     </span>
+     <span class="tag">
+      Linux
+     </span>
+     <span class="tag">
+      Scheduling
+     </span>
+    </div>
+    <a class="project-link" href="https://github.com/Superb-Man/utl-linux" rel="noopener" target="_blank">
+     View repository ↗
+    </a>
+   </article>
+   <article class="project-card">
+    <p class="project-meta">
+     Kernel concurrency mechanisms · 2023
+    </p>
+    <h4>
+     Kernel Threads on xv6
+    </h4>
+    <p>
+     Extended the xv6 kernel with threads sharing a process address space. Extended the implementation to thread creation, kernel scheduling behavior, and synchronization involving locks and semaphores, including challenges caused by sharing process resources across concurrent execution.
+    </p>
+    <div class="tags">
+     <span class="tag">
+      xv6
+     </span>
+     <span class="tag">
+      Threads
+     </span>
+     <span class="tag">
+      Synchronization
+     </span>
+    </div>
+    <a class="project-link" href="https://github.com/Superb-Man/Kernel-Thread" rel="noopener" target="_blank">
+     View repository ↗
+    </a>
+   </article>
+   <article class="project-card">
+    <p class="project-meta">
+     Virtual memory implementation · 2023
+    </p>
+    <h4>
+     Paging and Swap in xv6
+    </h4>
+    <p>
+     Implemented on-demand paging and swap-space support in xv6, including page-fault trap handling, bookkeeping for resident and swapped pages, an LRU-style eviction policy, and moving evicted pages to and from secondary storage.
+    </p>
+    <div class="tags">
+     <span class="tag">
+      xv6
+     </span>
+     <span class="tag">
+      Virtual Memory
+     </span>
+     <span class="tag">
+      Paging
+     </span>
+    </div>
+    <a class="project-link" href="https://github.com/Superb-Man/paging" rel="noopener" target="_blank">
+     View repository ↗
+    </a>
+   </article>
+   <article class="project-card">
+    <p class="project-meta">
+     Subset of C compiler · Undergraduate project
+    </p>
+    <h4>
+     Compiler Construction
+    </h4>
+    <p>
+     Implemented a subset of a C compiler with Flex/Bison bottom-up parsing, scoped symbol tables, semantic processing, parse-tree construction, and on-the-fly intermediate code generation.
+    </p>
+    <div class="tags">
+     <span class="tag">
+      C/C++
+     </span>
+     <span class="tag">
+      Bison
+     </span>
+     <span class="tag">
+      Compilers
+     </span>
+    </div>
+    <a class="project-link" href="https://github.com/Superb-Man/Compiler" rel="noopener" target="_blank">
+     View repository ↗
+    </a>
+   </article>
+   <article class="project-card">
+    <p class="project-meta">
+     Shared-preferences style persistence · Experimental implementation
+    </p>
+    <h4>
+     SP in C
+    </h4>
+    <p>
+     Built an Android-like shared-preferences facility in C/C++ with asynchronous batch updates and background flushing. Repository link and precise implementation details can be added when verified.
+    </p>
+    <div class="tags">
+     <span class="tag">
+      C / C++
+     </span>
+     <span class="tag">
+      Persistence
+     </span>
+     <span class="tag">
+      Asynchronous I/O
+     </span>
+    </div>
+    <a class="project-link" href="https://github.com/Superb-Man/SP-in-C" rel="noopener" target="_blank">
+     View repository ↗
+    </a>
+   </article>
+   <article class="project-card">
+    <p class="project-meta">
+     BUET · Level 3, Term 1 · Undergraduate hardware project
+    </p>
+    <h4>
+     4-bit MIPS Hardware Project
+    </h4>
+    <p>
+     Undergraduate hardware-design project involving a 4-bit MIPS processor.
+    </p>
+    <div class="tags">
+     <span class="tag">
+      Digital Logic
+     </span>
+     <span class="tag">
+      Processor Design
+     </span>
+    </div>
+   </article>
+  </div>
+ </div>
+ <div class="project-category">
+  <h3>
+   Tools
+  </h3>
+  <div class="project-grid">
+   <article class="project-card">
+    <p class="project-meta">
+     Regex and automata CLI · Tool
+    </p>
+    <h4>
+     RegX-Solver
+    </h4>
+    <p>
+     Command-line tool for converting simple regular expressions into finite automata, minimizing DFAs, and simulating CYK parsing.
+    </p>
+    <div class="tags">
+     <span class="tag">
+      Automata
+     </span>
+     <span class="tag">
+      Parsing
+     </span>
+     <span class="tag">
+      CLI
+     </span>
+    </div>
+    <a class="project-link" href="https://github.com/Superb-Man/RegX-Solver" rel="noopener" target="_blank">
+     View repository ↗
+    </a>
+   </article>
+   <article class="project-card">
+    <p class="project-meta">
+     Encoding and parsing utilities · Tool
+    </p>
+    <h4>
+     Toolbox
+    </h4>
+    <p>
+     Compiler automata construction process simulation implemented step by step for teaching and learning purposes. 
+     This work is done on top of 
+     <a href="https://github.com/frederickadams/finite-automata-web" rel="noopener" target="_blank">
+      a popular web project for generating finite automata from regular expressions. ↗
+     </a>
+    </p>
+    <div class="tags">
+     <span class="tag">
+      Utilities
+     </span>
+     <span class="tag">
+      Parsing
+     </span>
+    </div>
+    <a class="project-link" href="https://github.com/Superb-Man/toolbox" rel="noopener" target="_blank">
+     View repository ↗
+    </a>
+   </article>
+  </div>
+ </div>
+ <div class="project-category">
+  <h3>
+   Games
+  </h3>
+  <div class="project-grid">
+   <article class="project-card">
+    <p class="project-meta">
+     Arcade maze game · Game
+    </p>
+    <h4>
+     PACMAN
+    </h4>
+    <p>
+     A classic Pac-Man remake featuring 10 mazes with multiple levels, with extra fireball and hiding mechanics.
+    </p>
+    <div class="tags">
+     <span class="tag">
+      C/C++
+     </span>
+     <span class="tag">
+      OpenGL
+     </span>
+     <span class="tag">
+      Game Development
+     </span>
+    </div>
+    <a class="project-link" href="https://github.com/Superb-Man/PACMAN" rel="noopener" target="_blank">
+     View repository ↗
+    </a>
+   </article>
+   <article class="project-card">
+    <p class="project-meta">
+     Game-jam platform / arcade game · Game
+    </p>
+    <h4>
+     Escape from Death
+    </h4>
+    <p>
+     An eight-level arcade game built with Python and Pygame for a game jam.
+    </p>
+    <div class="tags">
+     <span class="tag">
+      Python
+     </span>
+     <span class="tag">
+      Pygame
+     </span>
+     <span class="tag">
+      Game Jam
+     </span>
+    </div>
+    <a class="project-link" href="https://github.com/Superb-Man/Runners_GameJam" rel="noopener" target="_blank">
+     View repository ↗
+    </a>
+   </article>
+  </div>
+ </div>
+</section>
+    <section class="section container" id="education">
+ <div class="section-heading">
+  <div>
+   <p class="eyebrow">
+    04 / BACKGROUND
+   </p>
+   <h2>
+    Education
+   </h2>
+  </div>
+ </div>
+ <article class="content-card">
+  <h3>
+   Bangladesh University of Engineering and Technology (BUET)
+  </h3>
+  <p class="degree">
+   B.Sc. in Computer Science and Engineering · Dhaka, Bangladesh
+  </p>
+  <p class="subtle">
+   Graduated 2025
+  </p>
+  <h4>
+   Notable coursework
+  </h4>
+  <div class="tags">
+   <span class="tag">
+    Operating Systems
+   </span>
+   <span class="tag">
+    Distributed Systems
+   </span>
+   <span class="tag">
+    Computer Networks
+   </span>
+   <span class="tag">
+    Computer Architecture
+   </span>
+   <span class="tag">
+    Compilers
+   </span>
+   <span class="tag">
+    Microprocessors
+   </span>
+   <span class="tag">
+    Computer Security
+   </span>
+  </div>
+ </article>
+</section>
+    <section class="section container" id="skills">
+ <div class="section-heading">
+  <div>
+   <p class="eyebrow">
+    05 / TECHNICAL BACKGROUND
+   </p>
+   <h2>
+    Skills
+   </h2>
+  </div>
+ </div>
+ <div class="skills-grid">
+  <article class="content-card">
+   <h3>
+    Programming languages
+   </h3>
+   <div class="tags">
+    <span class="tag">
+     C
+    </span>
+    <span class="tag">
+     C++
+    </span>
+    <span class="tag">
+     Go
+    </span>
+    <span class="tag">
+     Python
+    </span>
+    <span class="tag">
+     Java
+    </span>
+    <span class="tag">
+     Kotlin
+    </span>
+    <span class="tag">
+     Bash
+    </span>
+   </div>
+  </article>
+  <article class="content-card">
+   <h3>
+    Systems and concepts
+   </h3>
+   <div class="tags">
+    <span class="tag">
+     Linux / xv6
+    </span>
+    <!-- <span class="tag">
+     Concurrency, synchronization, Parallelism
+    </span> -->
+    <span class="tag">
+     Redis
+    </span>
+    <!-- <span class="tag">
+     RAFT, Mu, 
+    </span>
+    <span class="tag">
+     Sockets and asynchronous messaging
+    </span>
+    <span class="tag">
+     Distributed replication and recovery
+    </span>
+    <span class="tag">
+     Linux data-movement APIs
+    </span> -->
+   </div>
+  </article>
+  <article class="content-card">
+   <h3>
+    Tools and platforms
+   </h3>
+   <div class="tags">
+    <span class="tag">
+     Git
+    </span>
+    <span class="tag">
+     Docker
+    </span>
+    <span class="tag">
+     KLEE
+    </span>
+    <span class="tag">
+     Valgrind
+    </span>
+    <span class="tag">
+     Android Studio Profiler
+    </span>
+   </div>
+  </article>
+ </div>
+</section>
+    
+<section class="section container" id="contact">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">06 / GET IN TOUCH</p>
+            <h2>Contact</h2>
+        </div>
+    </div>
+
+    <div class="content-card contact-card">
+        <p>
+            I'm always happy to discuss research ideas,
+            interesting systems problems, and opportunities
+            for academic collaboration.
+            Feel free to reach out!
+        </p>
+
+        <div class="contact-links">
+
+            <a class="contact-link"
+               href="mailto:kazitoriqe207@gmail.com">
+                <span class="contact-icon">✉</span>
+                <span class="contact-detail">
+                    <strong>Email</strong>
+                    <span>kazitoriqe207@gmail.com</span>
+                </span>
+                <span class="contact-arrow">↗</span>
+            </a>
+
+            <a class="contact-link"
+               href="https://bd.linkedin.com/in/kazi-istiak-toriqe-66a499307"
+               target="_blank" rel="noopener noreferrer">
+                <span class="contact-icon">in</span>
+                <span class="contact-detail">
+                    <strong>LinkedIn</strong>
+                    <span>Connect with me</span>
+                </span>
+                <span class="contact-arrow">↗</span>
+            </a>
+
+            <a class="contact-link"
+               href="https://github.com/Superb-Man"
+               target="_blank" rel="noopener noreferrer">
+                <span class="contact-icon">⌘</span>
+                <span class="contact-detail">
+                    <strong>GitHub</strong>
+                    <span>Superb-Man</span>
+                </span>
+                <span class="contact-arrow">↗</span>
+            </a>
+
+        </div>
+
+        <p class="subtle">Dhaka, Bangladesh</p>
+    </div>
+</section>
+    <section class="section container" id="cv">
+ <div class="section-heading">
+  <div>
+   <p class="eyebrow">
+    07 / CURRICULUM VITAE
+   </p>
+   <h2>
+    CV
+   </h2>
+  </div>
+ </div>
+ <div class="content-card compact-card">
+  <p>
+   A concise overview of my education, research experience, and selected projects.
+  </p>
+  <a href="https://example.com/my-cv.pdf" rel="noopener" target="_blank">
+   View CV
+  </a>
+ </div>
+</section>
   </main>
-
-
-
-
-
-
-  <!--
-    - custom js link
-  -->
+  <footer class="container footer">
+ <span>
+  © 2026 Kazi Istiak Toriqe
+ </span>
+ <a href="#home">
+  Back to top ↑
+ </a>
+</footer>
   <script src="./assets/js/script.js"></script>
-
-  <!--
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
 </body>
-
 </html>
+

@@ -1,32 +1,9 @@
-// import ejs 
-const ejs = require('ejs');
-
-
-// read data from data/data.json and render using ejs template and output them in a html file
-const fs = require('fs');
-
-const data = {};
-const user = fs.readFileSync('data/user.json', 'utf8');
-data.user = JSON.parse(user);
-const about = fs.readFileSync('data/about.json', 'utf8');
-data.about = JSON.parse(about);
-const skills = fs.readFileSync('data/skills.json', 'utf8');
-data.skills = JSON.parse(skills);
-const education = fs.readFileSync('data/education.json', 'utf8');
-data.education = JSON.parse(education);
-const achievements = fs.readFileSync('data/achievements.json', 'utf8');
-data.achievements = JSON.parse(achievements);
-const experiences = fs.readFileSync('data/experiences2.json', 'utf8');
-data.experiences = JSON.parse(experiences);
-const projects = fs.readFileSync('data/projects.json', 'utf8');
-data.projects = JSON.parse(projects);
-const researches = fs.readFileSync('data/researches.json', 'utf8');
-data.researches = JSON.parse(researches);
-try{
-    const template = fs.readFileSync('templates/index.ejs', 'utf8');
-    const html = ejs.render(template, data);
-    fs.writeFileSync('index.html', html);
-}catch(err){
-    console.log(err);
-}
-
+// Portable generator: requires only Node.js. Blog content is sourced from Markdown files.
+const fs=require('fs'),path=require('path');const root=__dirname;
+const p=JSON.parse(fs.readFileSync(path.join(root,'data/profile.json'),'utf8'));
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function render(text, data){const re=/<%([=-]?)([\s\S]*?)%>/g;let i=0,m,parts=['let out="";'];while((m=re.exec(text))){if(m.index>i)parts.push('out+='+JSON.stringify(text.slice(i,m.index))+';');if(m[1]==='=')parts.push('out+=esc(('+m[2]+'));');else if(m[1]==='-')parts.push('out+=String(('+m[2]+'));');else parts.push(m[2]);i=re.lastIndex;}parts.push('out+='+JSON.stringify(text.slice(i))+';','return out;');return new Function('p','esc',parts.join('\n'))(data,esc);}
+function inline(s){return esc(s).replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/\*([^*]+)\*/g,'<em>$1</em>').replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');}
+function md(source){let out=[],inList=false,inCode=false,code=[];for(const line of source.split(/\r?\n/)){if(line.startsWith('```')){if(inCode){out.push('<pre><code>'+esc(code.join('\n'))+'</code></pre>');code=[];inCode=false;}else{inCode=true;}continue;}if(inCode){code.push(line);continue;}const h=line.match(/^(#{1,4})\s+(.*)$/);if(h){if(inList){out.push('</ul>');inList=false;}const n=h[1].length;out.push(`<h${n}>${inline(h[2])}</h${n}>`);continue;}const li=line.match(/^[-*]\s+(.*)$/);if(li){if(!inList){out.push('<ul>');inList=true;}out.push('<li>'+inline(li[1])+'</li>');continue;}if(inList){out.push('</ul>');inList=false;}if(/^>\s?/.test(line)){out.push('<blockquote>'+inline(line.replace(/^>\s?/,''))+'</blockquote>');continue;}if(line.trim())out.push('<p>'+inline(line)+'</p>');}if(inList)out.push('</ul>');return out.join('\n');}
+fs.writeFileSync(path.join(root,'index.html'),render(fs.readFileSync(path.join(root,'templates/index.ejs'),'utf8'),p));
+console.log('Generated index.html; existing curated blog pages are preserved.');

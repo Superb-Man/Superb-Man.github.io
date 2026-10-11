@@ -1,0 +1,124 @@
+
+<section class="section container" id="experience">
+
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">02 / PROFESSIONAL JOURNEY</p>
+      <h2>Professional Experience</h2>
+    </div>
+  </div>
+
+  <div class="experience-timeline">
+
+    <div class="experience-company">
+      <div>
+        <h3>Samsung Research Bangladesh</h3>
+        <p>Software R&amp;D</p>
+      </div>
+      <span class="experience-date">May 2025 – Present</span>
+    </div>
+
+    <div class="timeline-items">
+
+      <!-- Samsung Health Monitor -->
+      <article class="timeline-item">
+        <div class="timeline-marker"></div>
+
+        <div class="timeline-card">
+          <div class="timeline-card-header">
+            <div>
+              <p class="project-meta">HEALTH MONITORING SYSTEMS</p>
+              <h3>Samsung Health Monitor · Sleep Apnea</h3>
+            </div>
+          </div>
+
+          <ul>
+            <li>
+              Designed asynchronous message protocols between
+              Wear OS and Android for the Sleep Apnea feature,
+              collaborating with Samsung Research America.
+            </li>
+            <li>
+              Worked on sensor-data collection, session
+              management, and recovery following device
+              reboots, permission changes, and failures.
+            </li>
+            <li>
+              Contributed to health-data backup, restoration,
+              and synchronization interfaces using Samsung
+              Health SDK, collaborating with Samsung Korea.
+            </li>
+            <li>
+              Reduced unnecessary sensor activity and polling;
+              refactored connection handling with approximately
+              2× faster connection establishment
+              (as measured internally).
+            </li>
+          </ul>
+
+          <div class="tags">
+            <span class="tag">Asynchronous Messaging</span>
+            <span class="tag">Session Management</span>
+            <span class="tag">Fault Recovery</span>
+            <span class="tag">Data Backup</span>
+            <span class="tag">Resource Efficiency</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- FlashShare -->
+      <article class="timeline-item">
+        <div class="timeline-marker"></div>
+
+        <div class="timeline-card">
+          <div class="timeline-card-header">
+            <div>
+              <p class="project-meta">NETWORKED SYSTEMS</p>
+              <h3>
+                FlashShare · Fault-Tolerant LAN File Sharing
+              </h3>
+            </div>
+
+            <span class="timeline-status">Ongoing</span>
+          </div>
+
+          <ul>
+            <li>
+              Designed a high-throughput peer-to-peer system
+              for large LAN transfers using fanout and
+              relay topologies.
+            </li>
+            <li>
+              Separated user-space control protocols from
+              the bulk data path, implementing direct
+              transfers using Linux sendfile().
+            </li>
+            <li>
+              Designed progress-aware recovery after relay failures with proper state tracking and appropiate control plane mechanisms.
+            </li>
+            <li>
+              Exploring splice()/tee() for low-copy relay
+              forwarding.
+            </li>
+          </ul>
+
+          <div class="tags">
+            <span class="tag">TCP</span>
+            <span class="tag">Relay &amp; Fanout</span>
+            <span class="tag">Linux sendfile()</span>
+            <span class="tag">splice()/tee()</span>
+            <span class="tag">Failure Recovery</span>
+          </div>
+
+          <a class="project-link"
+             href="https://github.com/Superb-Man/flashshare"
+             target="_blank" rel="noopener">
+            View repository ↗
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+</section>

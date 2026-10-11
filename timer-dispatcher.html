@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="A complete technical walkthrough of a Unix-style C++ timer dispatcher" name="description"/>
+  <title>
+   One Alarm Clock, Many Jobs | Kazi Istiak Toriqe
+  </title>
+  <link href="./assets/css/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <header class="site-header">
+   <div class="container nav-inner">
+    <a class="wordmark" href="./index.html">
+     Kazi Istiak Toriqe
+    </a>
+    <nav>
+     <a href="./index.html">
+      About
+     </a>
+     <a href="./index.html#research">
+      Research
+     </a>
+     <a href="./index.html#projects">
+      Projects
+     </a>
+     <a href="./blog.html">
+      Blog
+     </a>
+     <a href="./index.html#contact">
+      Contact
+     </a>
+    </nav>
+   </div>
+  </header>
+  <main class="container article-layout">
+   <aside class="article-side">
+    <a class="minor-link" href="./blog.html">
+     ← All posts
+    </a>
+    <div class="side-label">
+     Systems / C++
+    </div>
+    <p>
+     Timers · Concurrency · Scheduling
+    </p>
+    <details class="article-toc">
+     <summary>
+      In this article (17 sections)
+     </summary>
+     <ol>
+      <li>
+       <a href="#section-1">
+        1. What does “schedule a callback” mean?
+       </a>
+      </li>
+      <li>
+       <a href="#section-2">
+        2. The complete architecture
+       </a>
+      </li>
+      <li>
+       <a href="#section-3">
+        3. The timer record
+       </a>
+      </li>
+      <li>
+       <a href="#section-4">
+        4. Turning \`priority_queue\` into a min-heap
+       </a>
+      </li>
+      <li>
+       <a href="#section-5">
+        5. What \`schedule()\` really does
+       </a>
+      </li>
+      <li>
+       <a href="#section-6">
+        6. Why use a pipe?
+       </a>
+      </li>
+      <li>
+       <a href="#section-7">
+        7. Sleeping without busy-waiting
+       </a>
+      </li>
+      <li>
+       <a href="#section-8">
+        8. One alarm represents the earliest deadline
+       </a>
+      </li>
+      <li>
+       <a href="#section-9">
+        9. Dispatching all expired timers
+       </a>
+      </li>
+      <li>
+       <a href="#section-10">
+        10. Why callbacks need a worker pool
+       </a>
+      </li>
+      <li>
+       <a href="#section-11">
+        11. The dispatcher loop
+       </a>
+      </li>
+      <li>
+       <a href="#section-12">
+        12. Starting and stopping safely
+       </a>
+      </li>
+      <li>
+       <a href="#section-13">
+        13. An interesting execution story
+       </a>
+      </li>
+      <li>
+       <a href="#section-14">
+        14. Method map
+       </a>
+      </li>
+      <li>
+       <a href="#section-15">
+        15. Correctness traps worth learning from
+       </a>
+      </li>
+      <li>
+       <a href="#section-16">
+        16. A simpler portable alternative
+       </a>
+      </li>
+      <li>
+       <a href="#section-17">
+        17. The whole dispatcher on one page
+       </a>
+      </li>
+     </ol>
+    </details>
+    <a class="side-link" href="https://github.com/Superb-Man/AlarmDispatcher">
+     Source code ↗
+    </a>
+   </aside>
+   <article class="article-paper">
+    <p class="eyebrow">
+     ENGINEERING NOTES · C++ / UNIX
+    </p>
+    <h1>
+     One Alarm Clock,
+     <br/>
+     <em>
+      Many Jobs.
+     </em>
+    </h1>
+    <p class="article-lead">
+     Building a Simple Timer Dispatcher in C++ · The complete technical walkthrough
+    </p>
+    <div class="article-divider">
+    </div>
+    <div class="article-copy markdown-body">
+     <p>
+      Imagine a tiny restaurant with three roles:
+     </p>
+     <ul>
+      <li>
+       a notebook records when every order should be served;
+      </li>
+      <li>
+       one alarm clock rings for the next order;
+      </li>
+      <li>
+       a group of cooks performs the actual work.
+      </li>
+     </ul>
+     <p>
+      That is the basic architecture of a timer dispatcher.
+     </p>
+<div class="mermaid">flowchart LR
+
+&#x20;   C[Calling threads&lt;br/&gt;schedule callbacks] --> Q[Deadline queue]
+
+&#x20;   Q --> D[Dispatcher thread]
+
+&#x20;   D --> A[One operating-system alarm]
+
+&#x20;   A --> D
+
+&#x20;   D --> P[Worker pool]
+
+&#x20;   P --> X[Run callbacks]
+
+</div>
+     <p>
+      The interesting trick is that we do not create one thread or one operating-
+
+system timer for every callback. We store all deadlines in a priority queue and
+
+arm one alarm for the earliest deadline.
+     </p>
+     <p>
+      This article explains a Unix-style design using:
+     </p>
+     <ul>
+      <li>
+       <code>
+        std::priority_queue
+       </code>
+       for ordered deadlines;
+      </li>
+      <li>
+       <code>
+        std::chrono::steady_clock
+       </code>
+       for time calculations;
+      </li>
+      <li>
+       <code>
+        setitimer()
+       </code>
+       and
+       <code>
+        SIGALRM
+       </code>
+       for one process alarm;
+      </li>
+      <li>
+       the self-pipe trick for safely notifying ordinary code from a signal handler;
+      </li>
+      <li>
+       <code>
+        select()
+       </code>
+       for sleeping without busy-waiting;
+      </li>
+      <li>
+       a thread pool for callbacks that may take time.
+      </li>
+     </ul>
+     <h2 id="section-1">
+      1. What does “schedule a callback” mean?
+     </h2>
+     <p>
+      The caller wants to express:
+     </p>
+<pre><code class="language-cpp">dispatcher.schedule(3s, [] {
+
+&#x20;   std::cout &lt;&lt; &quot;Three seconds passed
+&quot;;
+
+});
+
+</code></pre>
+     <p>
+      The dispatcher converts the relative delay into an absolute deadline:
+     </p>
+<pre><code class="language-text">deadline = steady_clock::now() + delay
+
+</code></pre>
+     <p>
+      Absolute deadlines make timers easy to order:
+     </p>
+<div class="mermaid">timeline
+
+&#x20;   title Scheduled callbacks
+
+&#x20;   t = 0s : Program starts
+
+&#x20;   t = 3s : Callback A
+
+&#x20;   t = 5s : Callback B
+
+&#x20;   t = 5s : Callback C
+
+&#x20;   t = 8s : Callback D
+
+</div>
+     <p>
+      The dispatcher needs to know only which deadline comes first. When that one
+
+expires, it checks whether other deadlines have also passed.
+     </p>
+     <h2 id="section-2">
+      2. The complete architecture
+     </h2>
+<div class="mermaid">flowchart TB
+
+&#x20;   S[schedule delay, callback]
+
+&#x20;   N[Compute now + delay]
+
+&#x20;   M[Lock timer mutex]
+
+&#x20;   Q[Push Timer into min-heap]
+
+&#x20;   W[Write byte to self-pipe]
+
+&#x20;   SEL[Dispatcher wakes from select]
+
+&#x20;   DR[Drain pipe]
+
+&#x20;   EX[Remove all expired timers]
+
+&#x20;   TP[Enqueue callbacks in thread pool]
+
+&#x20;   ARM[Arm process alarm for next deadline]
+
+&#x20;   SIG[SIGALRM fires]
+
+&#x20;   SH[Signal handler writes one byte]
+
+
+
+&#x20;   S --> N --> M --> Q --> W --> SEL
+
+&#x20;   SEL --> DR --> EX
+
+&#x20;   EX --> TP
+
+&#x20;   EX --> ARM
+
+&#x20;   ARM --> SIG --> SH --> SEL
+
+</div>
+     <p>
+      Two different events can wake the dispatcher:
+     </p>
+     <ol>
+      <li>
+       A caller schedules a new timer.
+      </li>
+      <li>
+       The operating-system alarm reaches the next deadline.
+      </li>
+     </ol>
+     <p>
+      Both events write to the same pipe. The dispatcher therefore has one simple
+
+wakeup path.
+     </p>
+     <h2 id="section-3">
+      3. The timer record
+     </h2>
+     <p>
+      Each scheduled item needs only a deadline and some work:
+     </p>
+<pre><code class="language-cpp">using Callback = std::function&lt;void()&gt;;
+
+
+
+struct Timer {
+
+&#x20;   std::chrono::steady_clock::time_point deadline;
+
+&#x20;   Callback callback;
+
+};
+
+</code></pre>
+     <p>
+      Why use
+      <code>
+       steady_clock
+      </code>
+      ?
+     </p>
+<div class="mermaid">flowchart LR
+
+&#x20;   A[system_clock] --> B[Represents civil time]
+
+&#x20;   B --> C[Can jump when clock is corrected]
+
+
+
+&#x20;   D[steady_clock] --> E[Represents monotonic elapsed time]
+
+&#x20;   E --> F[Does not run backward]
+
+</div>
+     <p>
+      If a user changes the wall clock, “run after three seconds” should still mean an
+
+elapsed three seconds.
+      <code>
+       steady_clock
+      </code>
+      is designed for that.
+     </p>
+     <h2 id="section-4">
+      4. Turning
+      <code>
+       priority_queue
+      </code>
+      into a min-heap
+     </h2>
+     <p>
+      <code>
+       std::priority_queue
+      </code>
+      normally exposes the largest element first. A dispatcher
+
+needs the earliest deadline first.
+     </p>
+<pre><code class="language-cpp">struct EarlierDeadline {
+
+&#x20;   bool operator()(const Timer&amp; left, const Timer&amp; right) const {
+
+&#x20;       return left.deadline &gt; right.deadline;
+
+&#x20;   }
+
+};
+
+
+
+std::priority_queue&lt;
+
+&#x20;   Timer,
+
+&#x20;   std::vector&lt;Timer&gt;,
+
+&#x20;   EarlierDeadline
+
+&gt; timers;
+
+</code></pre>
+     <p>
+      The reversed comparison may initially look wrong. It means that a later timer
+
+has lower priority, leaving the earliest timer at
+      <code>
+       top()
+      </code>
+      .
+     </p>
+<div class="mermaid">flowchart TB
+
+&#x20;   T3[Deadline: 3 seconds&lt;br/&gt;top]
+
+&#x20;   T3 --> T5A[Deadline: 5 seconds]
+
+&#x20;   T3 --> T5B[Deadline: 5 seconds]
+
+&#x20;   T5A --> T8[Deadline: 8 seconds]
+
+</div>
+     <p>
+      The heap guarantees:
+     </p>
+<pre><code class="language-text">timers.top() is the next deadline
+
+push/pop cost O(log n)
+
+reading top costs O(1)
+
+</code></pre>
+     <p>
+      It does not guarantee a stable order between callbacks with identical
+
+deadlines. If equal-deadline order matters, add a monotonically increasing
+
+sequence number.
+     </p>
+     <h2 id="section-5">
+      5. What
+      <code>
+       schedule()
+      </code>
+      really does
+     </h2>
+     <p>
+      The public method has a short logical path:
+     </p>
+<div class="mermaid">sequenceDiagram
+
+&#x20;   participant C as Caller
+
+&#x20;   participant D as Dispatcher
+
+&#x20;   participant Q as Timer queue
+
+&#x20;   participant P as Self-pipe
+
+
+
+&#x20;   C->>D: schedule(delay, callback)
+
+&#x20;   D->>D: deadline = steady_now + delay
+
+&#x20;   D->>Q: lock and push timer
+
+&#x20;   D->>P: write one wake byte
+
+&#x20;   D-->>C: return immediately
+
+</div>
+     <p>
+      The essential code is:
+     </p>
+<pre><code class="language-cpp">void schedule(std::chrono::milliseconds delay, Callback callback) {
+
+&#x20;   Timer timer{
+
+&#x20;       std::chrono::steady_clock::now() + delay,
+
+&#x20;       std::move(callback)
+
+&#x20;   };
+
+
+
+&#x20;   {
+
+&#x20;       std::lock_guard lock(mutex_);
+
+&#x20;       timers_.push(std::move(timer));
+
+&#x20;   }
+
+
+
+&#x20;   wake_dispatcher();
+
+}
+
+</code></pre>
+     <h3>
+      Why wake the dispatcher for every new timer?
+     </h3>
+     <p>
+      Suppose the dispatcher is currently waiting for a timer due in ten seconds:
+     </p>
+<pre><code class="language-text">currently armed deadline: t = 10s
+
+</code></pre>
+     <p>
+      After two seconds, another thread schedules a timer with a one-second delay:
+     </p>
+<pre><code class="language-text">new deadline: t = 3s
+
+</code></pre>
+     <p>
+      Without a wakeup, the dispatcher would continue sleeping until ten seconds and
+
+the new timer would be seven seconds late.
+     </p>
+<div class="mermaid">timeline
+
+&#x20;   title Why schedule() must wake the dispatcher
+
+&#x20;   t = 0s : Alarm armed for t=10
+
+&#x20;   t = 2s : New timer added for t=3
+
+&#x20;   t = 2s : Pipe wakes dispatcher
+
+&#x20;   t = 2s : Alarm rearmed for t=3
+
+&#x20;   t = 3s : New callback dispatched on time
+
+</div>
+     <h2 id="section-6">
+      6. Why use a pipe?
+     </h2>
+     <p>
+      Signal handlers run in a highly restricted context. Most C++ operations are not
+
+safe there:
+     </p>
+<pre><code class="language-text">Do not lock std::mutex
+
+Do not push into std::queue
+
+Do not allocate memory
+
+Do not call std::function
+
+Do not print with iostreams
+
+</code></pre>
+     <p>
+      A POSIX
+      <code>
+       write()
+      </code>
+      to a pipe is async-signal-safe. The handler therefore does the
+
+smallest possible job:
+     </p>
+<pre><code class="language-cpp">static void alarm_handler(int) {
+
+&#x20;   const std::uint8_t byte = 1;
+
+&#x20;   ::write(pipe_write_fd, &amp;byte, sizeof(byte));
+
+}
+
+</code></pre>
+     <p>
+      This converts an asynchronous signal into ordinary file-descriptor
+
+readability—the
+      <strong>
+       self-pipe trick
+      </strong>
+      .
+     </p>
+<div class="mermaid">sequenceDiagram
+
+&#x20;   participant K as Kernel timer
+
+&#x20;   participant S as SIGALRM handler
+
+&#x20;   participant P as Pipe
+
+&#x20;   participant D as Dispatcher thread
+
+
+
+&#x20;   K->>S: deliver SIGALRM
+
+&#x20;   Note over S: Restricted signal context
+
+&#x20;   S->>P: write one byte
+
+&#x20;   Note over S: Return immediately
+
+&#x20;   P-->>D: read end becomes readable
+
+&#x20;   D->>D: select() returns
+
+&#x20;   Note over D: Normal C++ context again
+
+</div>
+     <p>
+      The signal handler does not execute callbacks. It does not touch the timer heap.
+
+It only rings the dispatcher's doorbell.
+     </p>
+     <h2 id="section-7">
+      7. Sleeping without busy-waiting
+     </h2>
+     <p>
+      A bad dispatcher repeatedly checks the clock:
+     </p>
+<pre><code class="language-cpp">while (running) {
+
+&#x20;   if (timer_expired())
+
+&#x20;       run_it();
+
+}
+
+</code></pre>
+     <p>
+      That burns CPU even when the next timer is minutes away.
+     </p>
+     <p>
+      The dispatcher instead sleeps in
+      <code>
+       select()
+      </code>
+      until the pipe becomes readable:
+     </p>
+<pre><code class="language-cpp">fd_set readable;
+
+FD_ZERO(&amp;readable);
+
+FD_SET(pipe_read_fd, &amp;readable);
+
+
+
+::select(pipe_read_fd + 1,
+
+&#x20;        &amp;readable,
+
+&#x20;        nullptr,
+
+&#x20;        nullptr,
+
+&#x20;        nullptr);
+
+</code></pre>
+
+<div class="mermaid">stateDiagram-v2
+
+&#x20;   [*] --> WaitingInSelect
+
+&#x20;   WaitingInSelect --> Awake: Pipe readable
+
+&#x20;   Awake --> DrainPipe
+
+&#x20;   DrainPipe --> ProcessExpired
+
+&#x20;   ProcessExpired --> ArmNextAlarm
+
+&#x20;   ArmNextAlarm --> WaitingInSelect
+
+</div>
+     <p>
+      The dispatcher consumes almost no CPU while waiting.
+     </p>
+     <h3>
+      Why drain the whole pipe?
+     </h3>
+     <p>
+      Several events can write bytes before the worker runs:
+     </p>
+<pre><code class="language-text">[schedule byte][schedule byte][SIGALRM byte][schedule byte]
+
+</code></pre>
+     <p>
+      The bytes do not carry individual timer data; the real state is in the heap.
+
+They only mean “something changed.” The worker drains every available byte and
+
+then examines the heap once.
+     </p>
+<pre><code class="language-cpp">std::uint8_t buffer[64];
+
+while (::read(pipe_read_fd, buffer, sizeof(buffer)) &gt; 0) {
+
+&#x20;   // Discard wake bytes.
+
+}
+
+</code></pre>
+     <p>
+      Nonblocking mode makes the final read return instead of sleeping again.
+     </p>
+     <h2 id="section-8">
+      8. One alarm represents the earliest deadline
+     </h2>
+     <p>
+      After processing a wakeup, the dispatcher examines
+      <code>
+       timers_.top()
+      </code>
+      .
+     </p>
+<div class="mermaid">flowchart TD
+
+&#x20;   A[Lock timer queue] --> B{Queue empty?}
+
+&#x20;   B -- Yes --> C[Disarm process timer]
+
+&#x20;   B -- No --> D[Read earliest deadline]
+
+&#x20;   D --> E[duration = deadline - steady_now]
+
+&#x20;   E --> F{duration already expired?}
+
+&#x20;   F -- Yes --> G[Use minimum positive delay]
+
+&#x20;   F -- No --> H[Convert to seconds + microseconds]
+
+&#x20;   G --> I[setitimer]
+
+&#x20;   H --> I
+
+</div>
+     <p>
+      The operating-system timer is not one-to-one with a callback:
+     </p>
+<pre><code class="language-text">many queued Timer objects
+
+&#x20;         |
+
+&#x20;         v
+
+one setitimer deadline: the earliest one
+
+</code></pre>
+     <p>
+      When the alarm fires, the dispatcher removes every timer whose deadline is less
+
+than or equal to
+      <code>
+       now
+      </code>
+      , then arms the alarm for the next remaining deadline.
+     </p>
+     <h2 id="section-9">
+      9. Dispatching all expired timers
+     </h2>
+     <p>
+      Several timers may be due by the time the worker wakes:
+     </p>
+<div class="mermaid">timeline
+
+&#x20;   title One wakeup can release several callbacks
+
+&#x20;   t = 5.000s : Timer A deadline
+
+&#x20;   t = 5.000s : Timer B deadline
+
+&#x20;   t = 5.001s : Dispatcher examines heap
+
+&#x20;   t = 5.001s : A and B are both expired
+
+</div>
+     <p>
+      The processing loop is:
+     </p>
+<pre><code class="language-text">look at earliest timer
+
+&#x20;       |
+
+&#x20;       v
+
+is deadline &lt;= now? -- no --&gt; stop
+
+&#x20;       |
+
+&#x20;      yes
+
+&#x20;       |
+
+&#x20;       v
+
+move callback out and pop timer
+
+&#x20;       |
+
+&#x20;       v
+
+release timer mutex
+
+&#x20;       |
+
+&#x20;       v
+
+submit callback to worker pool
+
+&#x20;       |
+
+&#x20;       +--------------------&gt; check next timer
+
+</code></pre>
+     <p>
+      The mutex is released before submitting or running arbitrary work. User
+
+callbacks must never run while the timer queue is locked.
+     </p>
+     <h2 id="section-10">
+      10. Why callbacks need a worker pool
+     </h2>
+     <p>
+      Imagine these timers:
+     </p>
+<pre><code class="language-text">Timer A: due at 3s, callback takes 9s
+
+Timer B: due at 5s, callback is quick
+
+Timer C: due at 5s, callback is quick
+
+</code></pre>
+     <p>
+      If the dispatcher executes callbacks itself:
+     </p>
+<div class="mermaid">gantt
+
+&#x20;   title Callbacks run on dispatcher thread
+
+&#x20;   dateFormat X
+
+&#x20;   axisFormat %Ss
+
+&#x20;   section Dispatcher
+
+&#x20;   Slow A       :0, 9
+
+&#x20;   Late B and C :9, 10
+
+</div>
+     <p>
+      At time 3, callback A blocks the dispatcher until time 12. B and C cannot even
+
+be dispatched at time 5.
+     </p>
+     <p>
+      With a pool:
+     </p>
+<div class="mermaid">gantt
+
+&#x20;   title Dispatcher remains responsive
+
+&#x20;   dateFormat X
+
+&#x20;   axisFormat %Ss
+
+&#x20;   section Worker 1
+
+&#x20;   Slow A :0, 9
+
+&#x20;   section Worker 2
+
+&#x20;   Quick B :2, 3
+
+&#x20;   section Worker 3
+
+&#x20;   Quick C :2, 3
+
+</div>
+     <p>
+      The dispatcher decides
+      <strong>
+       when work becomes eligible
+      </strong>
+      . Pool workers decide
+      <strong>
+       where the work executes
+      </strong>
+      .
+     </p>
+     <p>
+      This is an important semantic distinction:
+     </p>
+<pre><code class="language-text">timer expired != callback finished
+
+</code></pre>
+     <p>
+      Pool saturation can still delay callback execution, so this is not a hard
+
+real-time scheduler.
+     </p>
+     <h2 id="section-11">
+      11. The dispatcher loop
+     </h2>
+     <p>
+      The entire worker thread can be understood as five repeating actions:
+     </p>
+<div class="mermaid">flowchart LR
+
+&#x20;   A[1. Wait in select] --> B[2. Drain pipe]
+
+&#x20;   B --> C[3. Pop expired timers]
+
+&#x20;   C --> D[4. Submit callbacks]
+
+&#x20;   D --> E[5. Arm earliest remaining timer]
+
+&#x20;   E --> A
+
+</div>
+     <p>
+      Conceptually:
+     </p>
+<pre><code class="language-cpp">while (running_) {
+
+&#x20;   wait_for_pipe_event();
+
+
+
+&#x20;   if (!running_)
+
+&#x20;       break;
+
+
+
+&#x20;   drain_pipe();
+
+&#x20;   process_expired_timers();
+
+&#x20;   arm_next_timer();
+
+}
+
+</code></pre>
+     <p>
+      The initial call to
+      <code>
+       schedule()
+      </code>
+      writes to the pipe, waking the loop so it can
+
+arm the first alarm.
+     </p>
+     <h2 id="section-12">
+      12. Starting and stopping safely
+     </h2>
+     <h3>
+      Start
+     </h3>
+     <p>
+      An atomic compare-and-exchange makes repeated
+      <code>
+       start()
+      </code>
+      calls harmless:
+     </p>
+<div class="mermaid">flowchart LR
+
+&#x20;   A[start called] --> B{running was false?}
+
+&#x20;   B -- No --> C[Return: already running]
+
+&#x20;   B -- Yes --> D[Set running true]
+
+&#x20;   D --> E[Create dispatcher thread]
+
+</div>
+     <h3>
+      Stop
+     </h3>
+     <p>
+      The worker may be blocked indefinitely in
+      <code>
+       select()
+      </code>
+      . Merely changing a Boolean
+
+does not wake it.
+     </p>
+<div class="mermaid">sequenceDiagram
+
+&#x20;   participant M as Stopping thread
+
+&#x20;   participant P as Pipe
+
+&#x20;   participant D as Dispatcher
+
+
+
+&#x20;   M->>M: running = false
+
+&#x20;   M->>P: write wake byte
+
+&#x20;   P-->>D: select returns
+
+&#x20;   D->>D: observe running == false
+
+&#x20;   D-->>M: worker thread exits
+
+&#x20;   M->>M: join worker
+
+&#x20;   M->>M: disarm process timer
+
+</div>
+     <p>
+      Joining is necessary before destroying the pipe, queue, or mutex used by the
+
+worker.
+     </p>
+     <h2 id="section-13">
+      13. An interesting execution story
+     </h2>
+     <p>
+      Suppose the program does this:
+     </p>
+<pre><code class="language-text">t=0: schedule Slow for t=3; Slow takes 9 seconds
+
+t=2: schedule Quick A, B, and C for t=5
+
+t=2: schedule Medium for t=5; Medium takes 3 seconds
+
+</code></pre>
+     <p>
+      The control-plane timeline is:
+     </p>
+<div class="mermaid">sequenceDiagram
+
+&#x20;   participant Main
+
+&#x20;   participant Pipe
+
+&#x20;   participant Dispatcher
+
+&#x20;   participant Alarm
+
+&#x20;   participant Pool
+
+
+
+&#x20;   Main->>Dispatcher: schedule Slow, deadline 3
+
+&#x20;   Main->>Pipe: wake
+
+&#x20;   Pipe-->>Dispatcher: select returns
+
+&#x20;   Dispatcher->>Alarm: arm for t=3
+
+
+
+&#x20;   Main->>Dispatcher: at t=2, add four deadline-5 timers
+
+&#x20;   Main->>Pipe: wake
+
+&#x20;   Pipe-->>Dispatcher: select returns
+
+&#x20;   Dispatcher->>Alarm: keep/rearm earliest t=3
+
+
+
+&#x20;   Alarm->>Pipe: at t=3, SIGALRM writes byte
+
+&#x20;   Pipe-->>Dispatcher: select returns
+
+&#x20;   Dispatcher->>Pool: submit Slow
+
+&#x20;   Dispatcher->>Alarm: arm for t=5
+
+
+
+&#x20;   Alarm->>Pipe: at t=5, SIGALRM writes byte
+
+&#x20;   Pipe-->>Dispatcher: select returns
+
+&#x20;   Dispatcher->>Pool: submit Quick A, B, C, Medium
+
+</div>
+     <p>
+      The slow callback does not prevent the dispatcher from noticing the time-5
+
+deadlines. Whether every callback starts immediately depends on available pool
+
+workers.
+     </p>
+     <h2 id="section-14">
+      14. Method map
+     </h2>
+<div class="mermaid">classDiagram
+
+&#x20;   class TimerDispatcher {
+
+&#x20;       +start()
+
+&#x20;       +stop()
+
+&#x20;       +schedule(delay, callback)
+
+&#x20;       -alarm_handler(signal)
+
+&#x20;       -wake_dispatcher()
+
+&#x20;       -worker_loop()
+
+&#x20;       -wait_for_event()
+
+&#x20;       -drain_pipe()
+
+&#x20;       -process_expired_timers()
+
+&#x20;       -arm_next_timer()
+
+&#x20;       -disarm_timer()
+
+&#x20;   }
+
+
+
+&#x20;   class Timer {
+
+&#x20;       +deadline
+
+&#x20;       +callback
+
+&#x20;   }
+
+
+
+&#x20;   class ThreadPool {
+
+&#x20;       +enqueue(callback)
+
+&#x20;       +stop(drain)
+
+&#x20;       -worker_loop()
+
+&#x20;   }
+
+
+
+&#x20;   TimerDispatcher *-- Timer
+
+&#x20;   TimerDispatcher *-- ThreadPool
+
+</div>
+     <table>
+      <thead>
+       <tr>
+        <th>
+         Method
+        </th>
+        <th>
+         Responsibility
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td>
+         <code>
+          start()
+         </code>
+        </td>
+        <td>
+         Transition to running and create the dispatcher thread.
+        </td>
+       </tr>
+       <tr>
+        <td>
+         <code>
+          schedule()
+         </code>
+        </td>
+        <td>
+         Compute an absolute deadline, push it, and wake the worker.
+        </td>
+       </tr>
+       <tr>
+        <td>
+         <code>
+          alarm_handler()
+         </code>
+        </td>
+        <td>
+         Perform the signal-safe pipe write only.
+        </td>
+       </tr>
+       <tr>
+        <td>
+         <code>
+          wait_for_event()
+         </code>
+        </td>
+        <td>
+         Sleep until the pipe becomes readable.
+        </td>
+       </tr>
+       <tr>
+        <td>
+         <code>
+          drain_pipe()
+         </code>
+        </td>
+        <td>
+         Coalesce one or many wake notifications.
+        </td>
+       </tr>
+       <tr>
+        <td>
+         <code>
+          process_expired_timers()
+         </code>
+        </td>
+        <td>
+         Remove due timers and submit their callbacks.
+        </td>
+       </tr>
+       <tr>
+        <td>
+         <code>
+          arm_next_timer()
+         </code>
+        </td>
+        <td>
+         Point the one OS alarm at the earliest remaining timer.
+        </td>
+       </tr>
+       <tr>
+        <td>
+         <code>
+          disarm_timer()
+         </code>
+        </td>
+        <td>
+         Clear the OS alarm when no deadline should fire.
+        </td>
+       </tr>
+       <tr>
+        <td>
+         <code>
+          stop()
+         </code>
+        </td>
+        <td>
+         Wake, join, and shut down without leaving the worker blocked.
+        </td>
+       </tr>
+      </tbody>
+     </table>
+     <h2 id="section-15">
+      15. Correctness traps worth learning from
+     </h2>
+     <p>
+      The architecture is educational, but a robust implementation must address
+
+several sharp edges.
+     </p>
+     <h3>
+      15.1 Initialize every configuration member
+     </h3>
+     <p>
+      A constructor parameter does not initialize a similarly named member
+
+automatically:
+     </p>
+<pre><code class="language-cpp">ThreadPool(int worker_count, int max_queue_size)
+
+&#x20;   : max_queue_size_(max_queue_size) {
+
+&#x20;   // ...
+
+}
+
+</code></pre>
+     <p>
+      Omitting that member initialization leaves
+      <code>
+       max_queue_size_
+      </code>
+      indeterminate.
+
+Reading it in:
+     </p>
+<pre><code class="language-cpp">tasks_.size() &gt;= max_queue_size_
+
+</code></pre>
+     <p>
+      causes undefined behavior.
+     </p>
+     <h3>
+      15.2
+      <code>
+       SIGALRM
+      </code>
+      and
+      <code>
+       setitimer
+      </code>
+      are process-global
+     </h3>
+<div class="mermaid">flowchart LR
+
+&#x20;   P[One process] --> S[One SIGALRM disposition]
+
+&#x20;   P --> I[One ITIMER_REAL timer]
+
+</div>
+     <p>
+      A global
+      <code>
+       instance_
+      </code>
+      pointer means only one dispatcher can safely own this
+
+mechanism. Another library in the same process may also use
+      <code>
+       SIGALRM
+      </code>
+      or
+      <code>
+       ITIMER_REAL
+      </code>
+      , creating interference.
+     </p>
+     <p>
+      A production class should either document that exclusivity, restore the old
+
+signal handler on destruction, or prefer an instance-scoped facility such as
+
+Linux
+      <code>
+       timerfd
+      </code>
+      .
+     </p>
+     <h3>
+      15.3 Check system-call results
+     </h3>
+     <p>
+      These calls can fail:
+     </p>
+<pre><code class="language-text">pipe, fcntl, sigaction, select, read, write, setitimer
+
+</code></pre>
+     <p>
+      Ignoring every result can turn a recoverable error into a permanently sleeping
+
+dispatcher or silently missed wakeup.
+     </p>
+     <p>
+      One useful exception: a nonblocking self-pipe write can return
+      <code>
+       EAGAIN
+      </code>
+      when the
+
+pipe is already full. The pipe is already readable in that case, so the wakeup
+
+condition still exists—but the condition should be handled intentionally.
+     </p>
+     <h3>
+      15.4 Rebuild
+      <code>
+       fd_set
+      </code>
+      when retrying
+      <code>
+       select
+      </code>
+     </h3>
+     <p>
+      <code>
+       select()
+      </code>
+      may modify its
+      <code>
+       fd_set
+      </code>
+      arguments. If it returns after interruption,
+
+reinitialize the set before retrying:
+     </p>
+<pre><code class="language-text">loop:
+
+&#x20;   FD_ZERO
+
+&#x20;   FD_SET
+
+&#x20;   call select
+
+&#x20;   if errno == EINTR, repeat from FD_ZERO
+
+</code></pre>
+     <h3>
+      15.5 Do not silently lose callbacks
+     </h3>
+     <p>
+      A bounded pool is good protection against unlimited memory growth, but
+      <code>
+       enqueue()
+      </code>
+      can reject work. The dispatcher must decide what rejection means:
+     </p>
+     <ul>
+      <li>
+       retry later;
+      </li>
+      <li>
+       run inline, accepting possible dispatcher delay;
+      </li>
+      <li>
+       send it to an overflow queue;
+      </li>
+      <li>
+       call an error handler;
+      </li>
+      <li>
+       explicitly drop it and record a metric.
+      </li>
+     </ul>
+     <p>
+      Ignoring a false return silently loses an expired timer.
+     </p>
+     <h3>
+      15.6 Define shutdown semantics
+     </h3>
+     <p>
+      When stopping, decide what happens to:
+     </p>
+     <ul>
+      <li>
+       timers whose deadlines have not arrived;
+      </li>
+      <li>
+       expired callbacks waiting in the pool;
+      </li>
+      <li>
+       callbacks already executing;
+      </li>
+      <li>
+       new
+       <code>
+        schedule()
+       </code>
+       calls racing with shutdown.
+      </li>
+     </ul>
+     <p>
+      “Stop immediately” and “drain all accepted work” are both reasonable, but they
+
+are different APIs.
+     </p>
+     <h2 id="section-16">
+      16. A simpler portable alternative
+     </h2>
+     <p>
+      If signals and file descriptors are not a learning requirement, one dispatcher
+
+thread can use
+      <code>
+       std::condition_variable::wait_until()
+      </code>
+      .
+     </p>
+<div class="mermaid">flowchart TD
+
+&#x20;   A[Lock timer queue] --> B{Queue empty?}
+
+&#x20;   B -- Yes --> C[Wait for schedule or stop]
+
+&#x20;   B -- No --> D[Read earliest deadline]
+
+&#x20;   D --> E[wait_until deadline]
+
+&#x20;   E --> F{Why did wait end?}
+
+&#x20;   F -->|New earlier timer| A
+
+&#x20;   F -->|Deadline reached| G[Pop expired timers]
+
+&#x20;   G --> H[Submit callbacks]
+
+&#x20;   H --> A
+
+</div>
+     <p>
+      <code>
+       schedule()
+      </code>
+      pushes a timer and calls
+      <code>
+       condition_variable::notify_one()
+      </code>
+      . That
+
+wakes the dispatcher so it can reconsider whether the new item is earlier.
+     </p>
+     <p>
+      This version is easier to make multi-instance and portable. The signal/self-
+
+pipe version is valuable when integrating signals into an FD-based Unix event
+
+loop or when learning how asynchronous signal notification is safely handed to
+
+normal code.
+     </p>
+     <h2 id="section-17">
+      17. The whole dispatcher on one page
+     </h2>
+<div class="mermaid">flowchart TD
+
+&#x20;   A[Caller schedules callback] --> B[Compute steady-clock deadline]
+
+&#x20;   B --> C[Push into min-heap under mutex]
+
+&#x20;   C --> D[Write wake byte]
+
+&#x20;   D --> E[select returns]
+
+&#x20;   E --> F[Drain pipe]
+
+&#x20;   F --> G[Read steady-clock now]
+
+&#x20;   G --> H{Earliest deadline <= now?}
+
+&#x20;   H -- Yes --> I[Pop timer]
+
+&#x20;   I --> J[Submit callback to pool]
+
+&#x20;   J --> H
+
+&#x20;   H -- No --> K{Queue empty?}
+
+&#x20;   K -- Yes --> L[Disarm OS timer]
+
+&#x20;   K -- No --> M[Arm OS timer for earliest deadline]
+
+&#x20;   L --> N[Wait in select]
+
+&#x20;   M --> N
+
+&#x20;   N -->|schedule wake| E
+
+&#x20;   N -->|SIGALRM writes pipe| E
+
+</div>
+     <p>
+      The central idea is elegant:
+     </p>
+     <blockquote>
+      <p>
+       Keep every logical timer in a heap, represent only the earliest deadline with
+
+one physical alarm, turn the signal into a normal pipe event, and move slow
+
+callbacks away from the timing thread.
+      </p>
+     </blockquote>
+     <p>
+      That separation gives each component one job:
+     </p>
+<pre><code class="language-text">priority queue  -&gt; what expires next?
+
+OS alarm        -&gt; when should the dispatcher wake?
+
+self-pipe       -&gt; how does the signal notify normal code safely?
+
+dispatcher      -&gt; which callbacks are now eligible?
+
+thread pool     -&gt; where should callback work execute?
+
+</code></pre>
+    </div>
+    <div class="article-end">
+     End of article ·
+     <a href="./blog.html">
+      More writing
+     </a>
+    </div>
+   </article>
+  </main>
+  <footer class="container footer">
+   <span>
+    © 2026 Kazi Istiak Toriqe
+   </span>
+   <a href="./blog.html">
+    ← All writing
+   </a>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral', securityLevel: 'strict' });
+    }
+  </script>
+ </body>
+</html>
+

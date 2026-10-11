@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>
+   Four Consecutive Squares and One Surprising Remainder | Kazi Istiak Toriqe
+  </title>
+  <link href="./assets/css/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <header class="site-header">
+   <div class="container nav-inner">
+    <a class="wordmark" href="./index.html">
+     Kazi Istiak Toriqe
+    </a>
+    <nav>
+     <a href="./index.html">
+      About
+     </a>
+     <a href="./index.html#research">
+      Research
+     </a>
+     <a href="./index.html#projects">
+      Projects
+     </a>
+     <a href="./blog.html">
+      Blog
+     </a>
+     <a href="./index.html#contact">
+      Contact
+     </a>
+    </nav>
+   </div>
+  </header>
+  <main class="container article-layout">
+   <aside class="article-side">
+    <a class="minor-link" href="./blog.html">
+     ← All posts
+    </a>
+    <div class="side-label">
+     Mathematics / Intuition
+    </div>
+    <p>
+     Squares · Modular arithmetic
+    </p>
+    <details class="article-toc">
+     <summary>
+      Sections
+     </summary>
+     <ol>
+      <li>
+       <a href="#topic-1">
+        Why modulo 4?
+       </a>
+      </li>
+      <li>
+       <a href="#topic-2">
+        What about perfect powers?
+       </a>
+      </li>
+      <li>
+       <a href="#topic-3">
+        A pattern worth keeping
+       </a>
+      </li>
+     </ol>
+    </details>
+    <!-- <a class="side-link" href="./content/blog/four_consecutive_squares.md">
+     Markdown source ↗
+    </a> -->
+   </aside>
+   <article class="article-paper">
+    <p class="eyebrow">
+     Mathematics / Intuition
+    </p>
+    <h1>
+     Four Consecutive Squares and One Surprising Remainder
+    </h1>
+    <p class="article-lead">
+     Squares · Modular arithmetic
+    </p>
+    <div class="article-divider">
+    </div>
+    <div class="article-copy markdown-body math-article">
+     <p>
+      Can four consecutive integers have squares that add up to a perfect square—or even to
+      <strong>
+       any
+      </strong>
+      perfect power greater than the first power?
+     </p>
+     <p>
+      Try the first four positive integers:
+     </p>
+     <p>
+      $$1^2+2^2+3^2+4^2=30.$$
+     </p>
+     <p>
+      The number 30 is not a perfect square, but checking examples won't prove the statement. The useful insight is simpler:
+      <strong>
+       look at remainders modulo 4.
+      </strong>
+     </p>
+     <h2 id="topic-1">
+      Why modulo 4?
+     </h2>
+     <p>
+      Any even integer has a square divisible by 4. Any odd integer has a square congruent to 1 modulo 4. Four consecutive integers always contain
+      <strong>
+       exactly two even and two odd numbers
+      </strong>
+      .
+     </p>
+     <p>
+      So their squares leave remainders:
+     </p>
+     <p>
+      $$0+1+0+1\equiv 2\pmod 4.$$
+     </p>
+     <p>
+      In other words, for every integer $n$,
+     </p>
+     <p>
+      $$n^2+(n+1)^2+(n+2)^2+(n+3)^2\equiv 2\pmod4.$$
+     </p>
+     <h2 id="topic-2">
+      What about perfect powers?
+     </h2>
+     <p>
+      A perfect power $a^k$ with integers $a$ and $k\ge 2$ is either odd (and hence has odd remainder modulo 4) or has an even base. But if $a$ is even, then $a^k$ is divisible by 4.
+     </p>
+     <p>
+      Therefore a perfect power with exponent at least 2 can
+      <strong>
+       never
+      </strong>
+      be congruent to 2 modulo 4.
+     </p>
+     <p>
+      And that is the whole proof: the sum always lands in the one remainder class that perfect powers cannot occupy.
+     </p>
+     <h2 id="topic-3">
+      A pattern worth keeping
+     </h2>
+     <p>
+      When a question says “for
+      <em>
+       every
+      </em>
+      consecutive group of integers,” try a small modulus before expanding large polynomials. Here the local pattern
+      <strong>
+       even, odd, even, odd
+      </strong>
+      is all the structure needed.
+     </p>
+     <p>
+      <em>
+       This is a newly written explanatory adaptation of the mathematical problem, not a transcription of the original Quora answer.
+      </em>
+      <a href="https://mathquestions.quora.com/Show-that-sum-of-squares-of-any-four-consecutive-numbers-cant-be-a-perfect-power-Copied-Question">
+       Original question on Quora
+      </a>
+      .
+     </p>
+    </div>
+    <div class="article-end">
+     End of article ·
+     <a href="./blog.html">
+      More writing
+     </a>
+    </div>
+   </article>
+  </main>
+  <footer class="container footer">
+   <span>
+    © 2026 Kazi Istiak Toriqe
+   </span>
+   <a href="./blog.html">
+    ← All writing
+   </a>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>if(window.mermaid){mermaid.initialize({startOnLoad:true,theme:"neutral",securityLevel:"strict"});}</script>
+  <script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]},svg:{fontCache:"global"}};</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+ </body>
+</html>
