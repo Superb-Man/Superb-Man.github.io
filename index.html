@@ -74,7 +74,7 @@
     Research interests
    </h2>
    <p>
-    Distributed systems, operating systems, runtime systems and analysis, lightweight execution, low-overhead communication and fault-tolerant coordination.
+    Fault tolerant Distributed systems, operating systems, High performance I/O, runtime systems and analysis.
    </p>
   </div>
   <div class="intro-actions">
@@ -135,19 +135,23 @@
 
   <div class="section-heading">
     <div>
-      <p class="eyebrow">02 / PROFESSIONAL JOURNEY</p>
-      <h2>Professional Experience</h2>
+      <p class="eyebrow">02 / PROFESSIONAL & RESEARCH EXPERIENCE</p>
+      <h2>Experience</h2>
     </div>
   </div>
 
+  <!-- Samsung Research Bangladesh -->
   <div class="experience-timeline">
 
     <div class="experience-company">
       <div>
         <h3>Samsung Research Bangladesh</h3>
-        <p>Software R&amp;D</p>
+        <p>Research &amp; Development Engineer</p>
       </div>
-      <span class="experience-date">May 2025 – Present</span>
+
+      <span class="experience-date">
+        May 2025 – Present
+      </span>
     </div>
 
     <div class="timeline-items">
@@ -159,16 +163,21 @@
         <div class="timeline-card">
           <div class="timeline-card-header">
             <div>
-              <p class="project-meta">HEALTH MONITORING SYSTEMS</p>
-              <h3>Samsung Health Monitor · Sleep Apnea</h3>
+              <p class="project-meta">
+                HEALTH MONITORING SYSTEMS
+              </p>
+              <h3>
+                Samsung Health Monitor · Sleep Apnea
+              </h3>
             </div>
           </div>
 
           <ul>
             <li>
-              Designed asynchronous message protocols between
-              Wear OS and Android for the Sleep Apnea feature,
-              collaborating with Samsung Research America.
+              Designed asynchronous message protocols
+              between Wear OS and Android for the Sleep
+              Apnea feature, collaborating with Samsung
+              Research America.
             </li>
             <li>
               Worked on sensor-data collection, session
@@ -205,7 +214,9 @@
         <div class="timeline-card">
           <div class="timeline-card-header">
             <div>
-              <p class="project-meta">NETWORKED SYSTEMS</p>
+              <p class="project-meta">
+                NETWORKED SYSTEMS
+              </p>
               <h3>
                 FlashShare · Fault-Tolerant LAN File Sharing
               </h3>
@@ -216,9 +227,9 @@
 
           <ul>
             <li>
-              Designed a high-throughput peer-to-peer system
-              for large LAN transfers using fanout and
-              relay topologies.
+              Designed a high-throughput peer-to-peer
+              system for large LAN transfers using
+              fanout and relay topologies.
             </li>
             <li>
               Separated user-space control protocols from
@@ -226,11 +237,13 @@
               transfers using Linux sendfile().
             </li>
             <li>
-              Designed progress-aware recovery after relay failures with proper state tracking and appropiate control plane mechanisms.
+              Designed progress-aware recovery after
+              relay failures through transfer-state
+              tracking and control-plane coordination.
             </li>
             <li>
-              Exploring splice()/tee() for low-copy relay
-              forwarding.
+              Exploring splice()/tee() for low-copy
+              relay forwarding.
             </li>
           </ul>
 
@@ -244,9 +257,123 @@
 
           <a class="project-link"
              href="https://github.com/Superb-Man/flashshare"
-             target="_blank" rel="noopener">
+             target="_blank"
+             rel="noopener">
             View repository ↗
           </a>
+        </div>
+      </article>
+
+      <!-- GPU Job Scheduling -->
+      <article class="timeline-item">
+        <div class="timeline-marker"></div>
+
+        <div class="timeline-card">
+          <div class="timeline-card-header">
+            <div>
+              <p class="project-meta">
+                SCHEDULING, CO-ORDINATION &amp; RESOURCE MANAGEMENT
+              </p>
+              <h3>
+                GPU Job Scheduling Coordinator &amp;
+                Resource-Aware Scheduling
+              </h3>
+            </div>
+
+            <span class="timeline-status">Ongoing</span>
+          </div>
+
+          <ul>
+            <li>
+              Designed and implemented a centralized GPU
+              job scheduling coordinator for training and
+              inference workloads across independent
+              workstations, each equipped with a
+              48 GB VRAM GPU.
+            </li>
+            <li>
+              Implemented centralized job queueing and
+              resource-aware workstation selection based
+              on GPU availability and workload requirements.
+            </li>
+            <li>
+              Worked on integrating GPU telemetry to
+              monitor VRAM consumption, GPU utilization,
+              and job execution status across machines.
+            </li>
+            <li>
+              Currently integrating Slurm-based job
+              execution and workload profiling to relate
+              resource consumption and runtime metrics
+              to scheduling decisions and evaluate
+              resource-allocation policies.
+            </li>
+          </ul>
+
+          <div class="tags">
+            <span class="tag">GPU Scheduling</span>
+            <span class="tag">Resource Management</span>
+            <span class="tag">Parallel Computing</span>
+            <span class="tag">Slurm</span>
+            <span class="tag">Workload Profiling</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- UIUC Research Internship -->
+  <div class="experience-timeline experience-next">
+
+    <div class="experience-company">
+      <div>
+        <h3>
+          University of Illinois Urbana-Champaign (UIUC)
+        </h3>
+        <p>Research Intern</p>
+      </div>
+
+      <span class="experience-date">
+        May 2025 – Jul 2025
+      </span>
+    </div>
+
+    <div class="timeline-items">
+
+      <article class="timeline-item">
+        <div class="timeline-marker"></div>
+
+        <div class="timeline-card">
+          <div class="timeline-card-header">
+            <div>
+              <p class="project-meta">
+                SOFTWARE ANALYSIS &amp; TESTING
+              </p>
+              <h3>
+                Symbolic Execution, Concolic Execution
+                &amp; Fuzzing
+              </h3>
+            </div>
+
+            <span class="timeline-status timeline-completed">
+              Research Internship
+            </span>
+          </div>
+
+          <p>
+            Worked on program-analysis and software-testing
+            topics involving symbolic execution,
+            concolic execution, and fuzzing.
+          </p>
+
+          <div class="tags">
+            <span class="tag">Symbolic Execution</span>
+            <span class="tag">Concolic Execution</span>
+            <span class="tag">Fuzzing</span>
+            <span class="tag">Program Analysis</span>
+            <span class="tag">Software Testing</span>
+          </div>
         </div>
       </article>
 
@@ -416,8 +543,7 @@
      SP in C
     </h4>
     <p>
-     Built an Android-like shared-preferences facility in C/C++ with asynchronous batch updates and background flushing. Repository link and precise implementation details can be added when verified.
-    </p>
+     Built an Android-like shared-preferences facility in C/C++ with asynchronous batch updates and background flushing.
     <div class="tags">
      <span class="tag">
       C / C++

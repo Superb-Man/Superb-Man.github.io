@@ -36,7 +36,7 @@
     {
       "title": "Patient Similarity Detection via Contrastive Learning",
       "kind": "Undergraduate thesis · Manuscript under review",
-      "description": "Undergraduate thesis on patient similarity from Stanford Wearable PPG and PTB Diagnostic ECG signals. Adapted ResNeXt and EfficientNet to 1D time series, investigated contrastive learning and similarity aggregation, and evaluated results against baselines. Manuscript submitted to a Q1 journal (under review).",
+      "description": "Undergraduate thesis on patient similarity from Stanford Wearable PPG and PTB Diagnostic ECG signals. Adapted ResNeXt and EfficientNet to 1D time series, investigated contrastive learning and similarity aggregation, and evaluated results against baselines. Manuscript will be submitted to a Q1 journal.",
       "links": [
         {
           "label": "Supervisor: Dr. Atif Hasan Rahman",
