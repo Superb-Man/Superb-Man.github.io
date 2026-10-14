@@ -45,109 +45,28 @@
  </div>
 </header>
   <main id="home">
-    <section class="intro container" id="about">
- <div class="intro-copy">
-  <p class="eyebrow">
-   Prospective PhD applicant · Fall 2027
-  </p>
-  <h1>
-   Hello, I’m Kazi Istiak Toriqe and welcome to my little corner of the internet!
-  </h1>
-  <p>
-    I graduated from Bangladesh University of Engineering and Technology (BUET) with a bachelor's degree in Computer Science and Engineering. 
-    I always enjoy exploring how things work, especially when there's something interesting to figure out or an idea worth experimenting with. 
-    That curiosity eventually led me toward computer systems, an area I hope to explore and contribute further through research.
-  </p>
-  <p>
-    After graduating from BUET, I joined Samsung Research Bangladesh as a Research and Development Engineer. 
-    My work involves more than just developing software; before a solution makes its way into a product, 
-    we often need to investigate the underlying problem, explore possible approaches, 
-    and demonstrate that our proposed solution actually works. I've enjoyed this process of experimentation and validation, 
-    along with the practical challenges of turning ideas into reliable software. Outside work, I enjoy drawing, playing football, 
-    watching tennis, and reading about a variety of topics, both technical and non-technical.  
-  </p>
-    <p>
-    I want to pursue a PhD in Fall 2027 to deepen my research interests in computer systems, identify critical challenges and problems, explore new ideas and possible solutions in depth, and contribute to the field through meaningful research. This website is a collection of my projects, experiences, writings, and a few things I find interesting along the way.
-  </p>
-  <div class="interests-inline">
-   <h2>
-    Research interests
-   </h2>
-   <p>
-    Distributed systems, operating systems, runtime systems and analysis, lightweight execution, low-overhead communication and fault-tolerant coordination.
-   </p>
-  </div>
-  <div class="intro-actions">
-   <a class="btn secondary" href="#projects">
-    Selected work ↗
-   </a>
-   <a class="btn secondary" href="https://example.com/my-cv.pdf" rel="noopener" target="_blank">
-    CV (placeholder) ↗
-   </a>
-  </div>
- </div>
- <figure class="portrait-card">
-  <img src="assets/Toriqe.jpg" alt="Cox's Bazar, 2023">
-  <figcaption>
-   Photo taken on 2023, Cox's Bazar
-  </figcaption>
- </figure>
-</section>
-    <section class="section container" id="research">
- <div class="section-heading">
-  <div>
-   <p class="eyebrow">
-    01 / ACADEMIC WORK
-   </p>
-   <h2>
-    Research
-   </h2>
-  </div>
- </div>
- <div class="research-stack">
-  <article class="content-card">
-   <p class="eyebrow">
-    Undergraduate thesis · Manuscript under review
-   </p>
-   <h3>
-    Patient Similarity Detection via Contrastive Learning
-   </h3>
-   <p>
-    Undergraduate thesis on patient similarity detection using physiological signals from the Stanford Wearable PPG and PTB Diagnostic ECG datasets. 
-    Developed a novel contrastive loss function tailored to patient similarity learning and adapted ResNeXt and EfficientNet architectures for 1D time-series representation learning. 
-    Designed and optimized a K-nearest neighbors (KNN)-based inference pipeline for similarity search and label prediction over large patient databases, 
-    incorporating parallel processing to improve inference efficiency and reduce latency. Evaluated the proposed approach against existing baselines. 
-    Manuscript submitted to a Q1 journal (under review).   
-   </p>
-   <div class="inline-links">
-    <a href="https://cse.buet.ac.bd/faculty/faculty_detail/atif" rel="noopener" target="_blank">
-     Supervisor: Dr. Atif Hasan Rahman ↗
-    </a>
-    <a href="https://subangkar.github.io/" rel="noopener" target="_blank">
-     Collaborator: Subangkar Karmakar ↗
-    </a>
-   </div>
-  </article>
- </div>
-</section>
     
 <section class="section container" id="experience">
 
   <div class="section-heading">
     <div>
-      <p class="eyebrow">02 / PROFESSIONAL JOURNEY</p>
-      <h2>Professional Experience</h2>
+      <p class="eyebrow">02 / PROFESSIONAL & RESEARCH EXPERIENCE</p>
+      <h2>Experience</h2>
     </div>
   </div>
 
+  <!-- Samsung Research Bangladesh -->
   <div class="experience-timeline">
 
     <div class="experience-company">
       <div>
         <h3>Samsung Research Bangladesh</h3>
-        <p>Software R&amp;D</p>
+        <p>Research &amp; Development Engineer</p>
       </div>
-      <span class="experience-date">May 2025 – Present</span>
+
+      <span class="experience-date">
+        May 2025 – Present
+      </span>
     </div>
 
     <div class="timeline-items">
@@ -159,16 +78,21 @@
         <div class="timeline-card">
           <div class="timeline-card-header">
             <div>
-              <p class="project-meta">HEALTH MONITORING SYSTEMS</p>
-              <h3>Samsung Health Monitor · Sleep Apnea</h3>
+              <p class="project-meta">
+                HEALTH MONITORING SYSTEMS
+              </p>
+              <h3>
+                Samsung Health Monitor · Sleep Apnea
+              </h3>
             </div>
           </div>
 
           <ul>
             <li>
-              Designed asynchronous message protocols between
-              Wear OS and Android for the Sleep Apnea feature,
-              collaborating with Samsung Research America.
+              Designed asynchronous message protocols
+              between Wear OS and Android for the Sleep
+              Apnea feature, collaborating with Samsung
+              Research America.
             </li>
             <li>
               Worked on sensor-data collection, session
@@ -205,7 +129,9 @@
         <div class="timeline-card">
           <div class="timeline-card-header">
             <div>
-              <p class="project-meta">NETWORKED SYSTEMS</p>
+              <p class="project-meta">
+                NETWORKED SYSTEMS
+              </p>
               <h3>
                 FlashShare · Fault-Tolerant LAN File Sharing
               </h3>
@@ -216,9 +142,9 @@
 
           <ul>
             <li>
-              Designed a high-throughput peer-to-peer system
-              for large LAN transfers using fanout and
-              relay topologies.
+              Designed a high-throughput peer-to-peer
+              system for large LAN transfers using
+              fanout and relay topologies.
             </li>
             <li>
               Separated user-space control protocols from
@@ -226,11 +152,13 @@
               transfers using Linux sendfile().
             </li>
             <li>
-              Designed progress-aware recovery after relay failures with proper state tracking and appropiate control plane mechanisms.
+              Designed progress-aware recovery after
+              relay failures through transfer-state
+              tracking and control-plane coordination.
             </li>
             <li>
-              Exploring splice()/tee() for low-copy relay
-              forwarding.
+              Exploring splice()/tee() for low-copy
+              relay forwarding.
             </li>
           </ul>
 
@@ -244,9 +172,298 @@
 
           <a class="project-link"
              href="https://github.com/Superb-Man/flashshare"
-             target="_blank" rel="noopener">
+             target="_blank"
+             rel="noopener">
             View repository ↗
           </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- UIUC Research Internship -->
+  <div class="experience-timeline experience-next">
+
+    <div class="experience-company">
+      <div>
+        <h3>
+          University of Illinois Urbana-Champaign (UIUC)
+        </h3>
+        <p>Research Intern</p>
+      </div>
+
+      <span class="experience-date">
+        May 2025 – Jul 2025
+      </span>
+    </div>
+
+    <div class="timeline-items">
+
+      <article class="timeline-item">
+        <div class="timeline-marker"></div>
+
+        <div class="timeline-card">
+          <div class="timeline-card-header">
+            <div>
+              <p class="project-meta">
+                SOFTWARE ANALYSIS &amp; TESTING
+              </p>
+              <h3>
+                Symbolic Execution, Concolic Execution
+                &amp; Fuzzing
+              </h3>
+            </div>
+
+            <span class="timeline-status timeline-completed">
+              Research Internship
+            </span>
+          </div>
+
+          <p>
+            Worked on program-analysis and software-testing
+            topics involving symbolic execution,
+            concolic execution, and fuzzing.
+          </p>
+
+          <div class="tags">
+            <span class="tag">Symbolic Execution</span>
+            <span class="tag">Concolic Execution</span>
+            <span class="tag">Fuzzing</span>
+            <span class="tag">Program Analysis</span>
+            <span class="tag">Software Testing</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+</section>
+    <section class="section container" id="research">
+ <div class="section-heading">
+  <div>
+   <p class="eyebrow">
+    01 / ACADEMIC WORK
+   </p>
+   <h2>
+    Research
+   </h2>
+  </div>
+ </div>
+ <div class="research-stack">
+  <article class="content-card">
+   <p class="eyebrow">
+    Undergraduate thesis · Manuscript under review
+   </p>
+   <h3>
+    Patient Similarity Detection via Contrastive Learning
+   </h3>
+   <p>
+    Undergraduate thesis on patient similarity detection using physiological signals from the Stanford Wearable PPG and PTB Diagnostic ECG datasets. 
+    Developed a novel contrastive loss function tailored to patient similarity learning and adapted ResNeXt and EfficientNet architectures for 1D time-series representation learning. 
+    Designed and optimized a K-nearest neighbors (KNN)-based inference pipeline for similarity search and label prediction over large patient databases, 
+    incorporating parallel processing to improve inference efficiency and reduce latency. Evaluated the proposed approach against existing baselines. 
+    Manuscript will be submitted to a Q1 journal.   
+   </p>
+   <div class="inline-links">
+    <a href="https://cse.buet.ac.bd/faculty/faculty_detail/atif" rel="noopener" target="_blank">
+     Supervisor: Dr. Atif Hasan Rahman ↗
+    </a>
+    <a href="https://subangkar.github.io/" rel="noopener" target="_blank">
+     Collaborator: Subangkar Karmakar ↗
+    </a>
+   </div>
+  </article>
+ </div>
+</section>
+    
+<section class="section container" id="experience">
+
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">02 / PROFESSIONAL & RESEARCH EXPERIENCE</p>
+      <h2>Experience</h2>
+    </div>
+  </div>
+
+  <!-- Samsung Research Bangladesh -->
+  <div class="experience-timeline">
+
+    <div class="experience-company">
+      <div>
+        <h3>Samsung Research Bangladesh</h3>
+        <p>Research &amp; Development Engineer</p>
+      </div>
+
+      <span class="experience-date">
+        May 2025 – Present
+      </span>
+    </div>
+
+    <div class="timeline-items">
+
+      <!-- Samsung Health Monitor -->
+      <article class="timeline-item">
+        <div class="timeline-marker"></div>
+
+        <div class="timeline-card">
+          <div class="timeline-card-header">
+            <div>
+              <p class="project-meta">
+                HEALTH MONITORING SYSTEMS
+              </p>
+              <h3>
+                Samsung Health Monitor · Sleep Apnea
+              </h3>
+            </div>
+          </div>
+
+          <ul>
+            <li>
+              Designed asynchronous message protocols
+              between Wear OS and Android for the Sleep
+              Apnea feature, collaborating with Samsung
+              Research America.
+            </li>
+            <li>
+              Worked on sensor-data collection, session
+              management, and recovery following device
+              reboots, permission changes, and failures.
+            </li>
+            <li>
+              Contributed to health-data backup, restoration,
+              and synchronization interfaces using Samsung
+              Health SDK, collaborating with Samsung Korea.
+            </li>
+            <li>
+              Reduced unnecessary sensor activity and polling;
+              refactored connection handling with approximately
+              2× faster connection establishment
+              (as measured internally).
+            </li>
+          </ul>
+
+          <div class="tags">
+            <span class="tag">Asynchronous Messaging</span>
+            <span class="tag">Session Management</span>
+            <span class="tag">Fault Recovery</span>
+            <span class="tag">Data Backup</span>
+            <span class="tag">Resource Efficiency</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- FlashShare -->
+      <article class="timeline-item">
+        <div class="timeline-marker"></div>
+
+        <div class="timeline-card">
+          <div class="timeline-card-header">
+            <div>
+              <p class="project-meta">
+                NETWORKED SYSTEMS
+              </p>
+              <h3>
+                FlashShare · Fault-Tolerant LAN File Sharing
+              </h3>
+            </div>
+
+            <span class="timeline-status">Ongoing</span>
+          </div>
+
+          <ul>
+            <li>
+              Designed a high-throughput peer-to-peer
+              system for large LAN transfers using
+              fanout and relay topologies.
+            </li>
+            <li>
+              Separated user-space control protocols from
+              the bulk data path, implementing direct
+              transfers using Linux sendfile().
+            </li>
+            <li>
+              Designed progress-aware recovery after
+              relay failures through transfer-state
+              tracking and control-plane coordination.
+            </li>
+            <li>
+              Exploring splice()/tee() for low-copy
+              relay forwarding.
+            </li>
+          </ul>
+
+          <div class="tags">
+            <span class="tag">TCP</span>
+            <span class="tag">Relay &amp; Fanout</span>
+            <span class="tag">Linux sendfile()</span>
+            <span class="tag">splice()/tee()</span>
+            <span class="tag">Failure Recovery</span>
+          </div>
+
+          <a class="project-link"
+             href="https://github.com/Superb-Man/flashshare"
+             target="_blank"
+             rel="noopener">
+            View repository ↗
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- UIUC Research Internship -->
+  <div class="experience-timeline experience-next">
+
+    <div class="experience-company">
+      <div>
+        <h3>
+          University of Illinois Urbana-Champaign (UIUC)
+        </h3>
+        <p>Research Intern</p>
+      </div>
+
+      <span class="experience-date">
+        May 2025 – Jul 2025
+      </span>
+    </div>
+
+    <div class="timeline-items">
+
+      <article class="timeline-item">
+        <div class="timeline-marker"></div>
+
+        <div class="timeline-card">
+          <div class="timeline-card-header">
+            <div>
+              <p class="project-meta">
+                SOFTWARE ANALYSIS &amp; TESTING
+              </p>
+              <h3>
+                Symbolic Execution, Concolic Execution
+                &amp; Fuzzing
+              </h3>
+            </div>
+
+            <span class="timeline-status timeline-completed">
+              Research Internship
+            </span>
+          </div>
+
+          <p>
+            Worked on program-analysis and software-testing
+            topics involving symbolic execution,
+            concolic execution, and fuzzing.
+          </p>
+
+          <div class="tags">
+            <span class="tag">Symbolic Execution</span>
+            <span class="tag">Concolic Execution</span>
+            <span class="tag">Fuzzing</span>
+            <span class="tag">Program Analysis</span>
+            <span class="tag">Software Testing</span>
+          </div>
         </div>
       </article>
 
@@ -416,8 +633,7 @@
      SP in C
     </h4>
     <p>
-     Built an Android-like shared-preferences facility in C/C++ with asynchronous batch updates and background flushing. Repository link and precise implementation details can be added when verified.
-    </p>
+     Built an Android-like shared-preferences facility in C/C++ with asynchronous batch updates and background flushing.
     <div class="tags">
      <span class="tag">
       C / C++
